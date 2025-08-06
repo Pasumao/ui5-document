@@ -13,6 +13,12 @@ READ ENTITIES OF ypsm0010_i_form IN LOCAL MODE
     ENTITY ypsm0010_i_menu
     FROM VALUE #( FOR key IN keys ( formid = key-formid ) )
     RESULT DATA(lt_menu).
+"或者如果你有keys的话，可以这样
+READ ENTITIES OF ypsm0010_i_form IN LOCAL MODE
+    ENTITY ypsm0010_i_form
+    ALL FIELDS WITH
+    CORRESPONDING #( keys )
+    RESULT DATA(lt_data).
 ```
 
 可以用正常的select语句，也可以用read entities 但是read entities只能通过主键过滤
