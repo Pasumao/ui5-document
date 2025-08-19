@@ -92,9 +92,12 @@ value help用
       additionalBinding: [
           { element: 'FormId', localElement: 'FormId', usage: #FILTER },
           { element: 'MenuId', localElement: 'ParentMenu', usage: #RESULT }
-      ]
+      ],
+      useForValidation: true
   }]
 ```
+
+useForValidation加上这个会让他自动校验是否为valuehelp的值
 
 默认element就是#RESULT，不需要填，这个是给选一行给好几个字段填充时用的，filter要注意一定要有数据在当前行，要不然没作用,解决方法如下.
 
