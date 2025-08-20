@@ -123,3 +123,9 @@ METHOD GetDefaultsForMenu.
         ) ).
 ENDMETHOD.
 ```
+
+## @ObjectModel
+
+### @ObjectModel.resultSet
+
+@ObjectModel.resultSet.sizeCategory: #XS   会使valuehelp变为下拉框
