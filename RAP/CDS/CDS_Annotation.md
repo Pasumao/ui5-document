@@ -58,6 +58,8 @@
     }]
 ```
 
+注意：列表报告的默认表格类型是响应式表格。如果缩小浏览器窗口的大小，某些列会消失，表格工具栏中会出现 “显示详细信息 ”操作（自 SAPUI5 1.90 版起）。如果使用属性 importance： 如果在行项目注释中使用 #HIGH 属性，则可以确保列信息的显示不受浏览器窗口大小的影响。
+
 ### @UI.fieldGroup
 
 给几个字段绑成一组
@@ -68,12 +70,17 @@
 
 ### @UI.presentationVariant
 
-并不是很清楚具体的用意，但是是和上面的PRESENTATIONVARIANT_REFERENCE联动使用，也是导入表,但是实际上你使用LINEITEM_REFERENCE就不用写这个了，不明白意义在哪。
+和上面的PRESENTATIONVARIANT_REFERENCE联动使用。
+这个注解是用来给表增加限制的，比如sort，比如最大显示行数，等
 
 ```sql
 @UI.presentationVariant: [{  
       qualifier: 'TEXT_Variant',
-      maxItems: 5,
+      maxItems: 5,        
+      sortOrder: [{
+            by: 'LocalLastChangedAt',
+            direction: #DESC
+      }],
       visualizations: [{type: #AS_LINEITEM}]
 }]
 ```
