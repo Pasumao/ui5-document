@@ -224,3 +224,5 @@ instance hierarchy zgdv_h_0011
   descending association _Menu { with cascading delete; }
 }
 ```
+
+## Class
