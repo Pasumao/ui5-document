@@ -204,7 +204,7 @@ side effects {
 }
 ```
 
-- 树结构必须有此定义
+- 实现树节点的拖拽功能
 
 ```sql
 association _ParentMenu
@@ -213,9 +213,11 @@ association _ParentMenu
   link action linkParentMenu;
   unlink action unlinkParentMenu;
 }
+```
 
-association _Menu { with draft; }
+- 实现树节点的排序功能
 
+```sql
 instance hierarchy zgdv_h_0011
 {
   managed reorder action changeSeq;
@@ -225,4 +227,50 @@ instance hierarchy zgdv_h_0011
 }
 ```
 
+managed reorder action changeSeq;:要在用户界面上将层次结构节点移动到其同级节点中的指定位置，必须在实例层次结构的行为定义中声明重新排序操作
+
+field ( hierarchy-index ) MenuSeq;:它必须是 INT 或 NUMC 类型
+
+ascending association _ParentMenu;
+descending association_Menu { with cascading delete; }:对于托管重新排序操作，您还必须声明一个升序关联（即层次到父关联）和一个相应的反向关联（即降序关联）。在这里，你可以选择添加声明 { with cascading delete; }。有了这个声明，每当删除一个层次结构节点时，框架也会删除它的所有子节点。
+
 ## Class
+
+```abap
+CLASS lhc_zgdv_r_0011 DEFINITION INHERITING FROM cl_abap_behavior_handler.
+  PRIVATE SECTION.
+
+    METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
+      IMPORTING keys REQUEST requested_authorizations FOR zgdv_r_0011 RESULT result.
+    METHODS setmenuseq FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR zgdv_r_0011~setmenuseq.
+
+ENDCLASS.
+
+CLASS lhc_zgdv_r_0011 IMPLEMENTATION.
+
+  METHOD get_instance_authorizations.
+  ENDMETHOD.
+
+  METHOD setmenuseq.
+
+    READ ENTITIES OF zgdv_r_0010 IN LOCAL MODE
+        ENTITY zgdv_r_0011
+            ALL FIELDS WITH
+            CORRESPONDING #( keys )
+            RESULT DATA(lt_data).
+
+    MODIFY ENTITIES OF zgdv_r_0010 IN LOCAL MODE
+        ENTITY zgdv_r_0011
+            UPDATE FIELDS ( menuseq )
+            WITH VALUE #(
+                FOR ls_data IN lt_data (
+                    %control-MenuSeq = if_abap_behv=>mk-on
+                    %tky = ls_data-%tky
+                    menuseq = ls_data-seqout
+                )
+            ).
+  ENDMETHOD.
+
+ENDCLASS.
+```
