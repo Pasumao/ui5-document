@@ -1,6 +1,6 @@
 # rap createby createtime changeby changetime lastchangeat
 
-## 1.table cds
+## 1.cds
 
 貌似需要五个字段一起写才好用（未详细测试）
 
@@ -12,36 +12,60 @@
   last_changed_at       : abp_lastchange_tstmpl;
 ```
 
-## 2.behavior
+## 2.cds
 
-好像需要mapping，也没有详细测试
+```cds
+      @Semantics.systemDateTime.createdAt: true
+      create_date_time           as CreateDate,
+
+      @Semantics.user.createdBy: true
+      create_by             as CreateBy,
+
+      @Semantics.user.localInstanceLastChangedBy: true
+       local_last_changed_by as LocalLastChangedBy,
+
+      @Semantics.systemDateTime.localInstanceLastChangedAt: true
+      local_last_changed_at as LocalLastChangedAt,
+
+      @Semantics.systemDateTime.lastChangedAt: true
+      last_changed_at       as LastChangedAt
+```
+
+## 3.behavior
 
 ```sql
-managed implementation in class zbp_bemail_dd_email unique;
+managed implementation in class zbp_psm0020_i_grp unique;
 strict ( 2 );
+with draft;
 
-define behavior for YBEMAIL_DD_EMAIL //alias <alias_name>
-persistent table ybemail_dt_email
+define behavior for YPSM0020_I_GRP //alias <alias_name>
+persistent table ypsm0020_dt_grp
+draft table ypsm0020_dt_grpd
 lock master
+total etag LastChangedAt
 authorization master ( instance )
-etag master CreateBy
+etag master LastChangedAt
 {
-  create;
+  create ( authorization : global );
   update;
   delete;
+  field ( readonly: update ) GroupId;
+  field ( mandatory : create ) GroupId;
 
-  field ( readonly ) CreateBy, CreateDateTime;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
 
-  mapping for ybemail_dt_email
+  mapping for ypsm0020_dt_grp
     {
-      Email              = email;
-      Name               = name;
-      Admin              = admin;
-      CreateDateTime     = create_date_time;
       CreateBy           = create_by;
-      LocalLastChangedBy = local_last_changed_by;
-      LocalLastChangedAt = local_last_changed_at;
+      CreateDate         = create_date_time;
+      GroupId            = group_id;
       LastChangedAt      = last_changed_at;
+      LocalLastChangedAt = local_last_changed_at;
+      LocalLastChangedBy = local_last_changed_by;
     }
 }
 ```
