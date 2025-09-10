@@ -4,6 +4,8 @@
 
 貌似需要五个字段一起写才好用（未详细测试）
 
+在有子表时生成没有效果
+
 ```sql
   create_date_time      : abp_creation_tstmpl;
   create_by             : abp_creation_user;
