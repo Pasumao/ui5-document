@@ -143,6 +143,8 @@ DValue是主题颜色
   ]
 ```
 
+在Header中不可编辑，如果在下面的区域显示在编辑模式下可以通过单击改变值
+
 ### 在表中
 
 ```abap
@@ -206,3 +208,169 @@ DValue是主题颜色
 ![AreaChart](./image/@UI.chart.AreaChart.png)
 数据部分
 ![AreaChartData](./image/@UI.chart.AreaChart_data.png)
+
+## 6.LineChart
+
+### 定义
+
+```abap
+@UI.chart: [
+  {
+    qualifier: 'lineChart',
+    title: 'Line Micro Chart (#LineMicroChart)',
+    description: 'This is a micro chart',
+    chartType: #LINE,
+    measures: ['GValue', 'HValue'],
+    dimensions: ['BValue'],
+    measureAttributes: [
+      {
+        measure: 'GValue',
+        role: #AXIS_2,
+        asDataPoint: true
+      },
+      {
+        measure: 'HValue',
+        role: #AXIS_2,
+        asDataPoint: true
+      }
+    ]
+  }
+]
+
+  @UI:{
+    lineItem: [{ label: 'G', position: 110 }],
+    dataPoint: {
+        qualifier: 'GValue',
+        criticality: 'BValue'
+      }
+  }
+  @EndUserText.label: 'Value G'
+  GValue;
+
+  @UI:{
+    dataPoint: {
+      qualifier: 'HValue',
+      criticality: 'BValue'
+    }
+  }
+  @EndUserText.label: 'Value H'
+  HValue;
+```
+
+![LineChart](./image/@UI.chart.LineChart.png)
+数据部分
+![LineChart_data](./image/@UI.chart.LineChart_data.png)
+
+如无特殊后续不标注引用图表的代码
+
+## 7.ColumnChart
+
+### 定义
+
+```abap
+@UI.chart: [
+  {
+    qualifier: 'columnChart',
+    title: 'Column Micro Chart (#ColumnMicroChart)',
+    description: 'This is a micro chart',
+    chartType: #COLUMN,
+    measures: ['GValue'],
+    dimensions: ['BValue'],
+    measureAttributes: [
+      {
+        measure: 'GValue',
+        role: #AXIS_1,
+        asDataPoint: true
+      }
+    ]
+  }
+]
+
+  @UI:{
+    dataPoint: {
+        qualifier: 'GValue',
+        criticality: 'BValue'
+      }
+  }
+  @EndUserText.label: 'Value G'
+  GValue;
+```
+
+![ColumnChart](./image/@UI.chart.ColumnChart.png)
+数据同上
+
+## 8.StackedBar
+
+### 定义
+
+```abap
+@UI.chart: [
+  {
+    qualifier: 'stackedBarChart',
+    title: 'StackedBar MChart(#StackedBarMicroChart)',
+    description: 'This is a micro chart',
+    chartType: #BAR_STACKED,
+    measures: ['GValue'],
+    dimensions: ['BValue'],
+    measureAttributes: [
+      {
+        measure: 'GValue',
+        role: #AXIS_1,
+        asDataPoint: true
+      }
+    ]
+  }
+]
+
+  @UI:{
+    dataPoint: {
+        qualifier: 'GValue',
+        criticality: 'BValue'
+      }
+  }
+  @EndUserText.label: 'Value G'
+  GValue;
+```
+
+![StackedBar](./image/@UI.chart.StackedBar.png)
+数据同上
+
+## 99.Chart Config
+
+在criticality字段上可以用如下的注解来设置图表颜色
+
+```abap
+//默认
+  @UI.valueCriticality: [
+    {
+      value: '1',
+      criticality: #NEGATIVE
+    },
+    {
+      value: '2',
+      criticality: #CRITICAL
+    },
+    {
+      value: '3',
+      criticality: #POSITIVE
+    }
+  ]
+  CriticalityCode;
+
+//自定义
+@UI.ValueCriticality: [
+  {
+    value: 'CCLN',
+    criticality: #NEGATIVE
+  },
+  {
+    value: 'CR',
+    criticality: #CRITICAL
+  },
+  {
+    value: 'OR',
+    criticality: #POSITIVE
+  }
+]
+salesordertype;
+```
