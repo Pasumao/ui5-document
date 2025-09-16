@@ -120,7 +120,7 @@ DValue是主题颜色
 ```abap
   @UI:{ 
     dataPoint: { 
-        qualifier: 'StarsValue',
+        qualifier: 'EValue',
         targetValue: 5,
         visualization: #RATING,
         title: 'Rating Indicator (#DataPointRating)'
