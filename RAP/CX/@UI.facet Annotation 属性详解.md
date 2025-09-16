@@ -2,9 +2,9 @@
 
 @UI.facet 是 SAP BTP RAP (Restful ABAP Programming) 开发中用于定义对象页面中 facet（分面/区域）的注解。以下是各个属性的详细说明：
 
+#### 
 
-
-**a，基本属性**
+#### **a，基本属性**
 
 qualifier: 限定符，用于区分同类型的facet
 
@@ -34,7 +34,7 @@ purpose: facet的用途，常用值：
 
 
 
-**b，布局与可见性控制**
+b，布局与可见性控制
 
 parentId: 父facet的ID（用于嵌套结构）
 
@@ -64,7 +64,7 @@ isMap: true/false - 是否为地图facet
 
 
 
-**c，内容与显示**
+#### **c，内容与显示**
 
 importance: facet的重要性级别：
 
@@ -110,7 +110,7 @@ type: facet的类型，常用值：
 
 
 
-**d，导航与交互**
+#### **d，导航与交互**
 
 targetElement: 目标元素（用于导航）
 
@@ -122,9 +122,9 @@ targetQualifier: 目标限定符
 
 url: 关联的URL链接
 
+#### 
 
-
-**e，实际应用示例**
+#### **e，实际应用示例**
 
 e-1. 标准字段组facet
 

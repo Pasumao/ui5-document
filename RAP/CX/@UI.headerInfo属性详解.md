@@ -4,7 +4,7 @@
 
 
 
-a，顶级属性
+#### **a，顶级属性**
 
 typeName: 对象类型的单数名称（如"Product"）
 
@@ -22,7 +22,7 @@ imageUrl: 对象特定实例的图片URL
 
 
 
-b，title 对象 (标题部分)
+#### **b，title 对象 (标题部分)**
 
 type: 标题类型，通常为 #STANDARD
 
@@ -58,9 +58,9 @@ targetElement: 目标元素（用于导航等）
 
 url: 相关URL链接
 
+#### 
 
-
-c，description 对象 (描述部分)
+#### **c，description 对象 (描述部分)**
 
 描述部分的属性与title部分完全相同，用于定义对象页面的描述信息：
 
@@ -102,7 +102,7 @@ url: 相关URL链接
 
 
 
-实例
+#### **实例**
 
 @UI.headerInfo: {
 
