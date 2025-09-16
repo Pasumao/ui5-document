@@ -169,6 +169,7 @@ DValue是主题颜色
 ### 定义
 
 ```abap
+//********子表中********
 @UI.chart: [
   // Search Term #AreaMicroChart
   {
@@ -214,6 +215,7 @@ DValue是主题颜色
 ### 定义
 
 ```abap
+//********子表中********
 @UI.chart: [
   {
     qualifier: 'lineChart',
@@ -268,6 +270,7 @@ DValue是主题颜色
 ### 定义
 
 ```abap
+//********子表中********
 @UI.chart: [
   {
     qualifier: 'columnChart',
@@ -304,6 +307,7 @@ DValue是主题颜色
 ### 定义
 
 ```abap
+//********子表中********
 @UI.chart: [
   {
     qualifier: 'stackedBarChart',
@@ -334,6 +338,35 @@ DValue是主题颜色
 
 ![StackedBar](./image/@UI.chart.StackedBar.png)
 数据同上
+
+## 9.Comparison Chart
+
+### 定义
+
+```abap
+//********子表中********
+@UI.chart: [
+  {
+    qualifier: 'comparisonChart',
+    title: 'Comparison MChart(#ComparisonMicroChart)',
+    description: 'This is a micro chart',
+    chartType: #BAR,
+    measures: ['GValue'],
+    dimensions: ['BValue'],
+    measureAttributes: [
+      {
+        measure: 'GValue',
+        role: #AXIS_1,
+        asDataPoint: true
+      }
+    ]
+  }
+]
+```
+
+![ComparisonChart](./image/@UI.chart.ComparisonChart.png)
+
+貌似最多显示三行数据
 
 ## 99.Chart Config
 
