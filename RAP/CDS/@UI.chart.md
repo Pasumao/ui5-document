@@ -160,9 +160,48 @@ DValue是主题颜色
   }
 ```
 
-原则上是这样，但是我遇到了不明bug在表中不显示
+## 4.饼图 (有问题)
 
-## 4.饼图 有问题先欠着
+### 定义
+
+```abap
+@UI.chart: [
+  {
+    qualifier: 'harveyChart',
+    title: 'Harvey Micro Chart (#HarveyMicroChart)',
+    description: 'This is Harvey Micro Chart',
+    chartType: #PIE,
+    measures: ['BValue'],
+    measureAttributes: [
+      {
+        measure: 'BValue',
+        asDataPoint: true
+      }
+    ]
+  }
+]
+  @UI:{ 
+    lineItem: [
+      { 
+        label: 'PIE B', 
+        position: 40, 
+        type: #AS_CHART, 
+        valueQualifier: 'harveyChart' 
+      }
+    ],
+    dataPoint:{ 
+      maximumValue: 100.00,
+      criticality: 'FValue'
+    },
+    fieldGroup: [{ qualifier: 'value_fg', position: 20 }]
+  }
+  @EndUserText.label: 'Value B'
+  BValue;
+```
+
+![harveyChart](./image/@UI.chart.harveyChart.png)
+
+原则上是maximumValue设定最大值，但是实际并不生效，饼图无论如何在RAP上目前只能这么展示。
 
 ## 5.AreaChart
 
