@@ -1,5 +1,7 @@
 # @UI.chart
 
+注意 ： datapoint内不要写qualifier，如果要写也一定要和字段名一样，不然会报错
+
 ## 1. BulletChart
 
 ### 定义
@@ -24,7 +26,6 @@
 
   @UI:{
     dataPoint: { 
-      qualifier: 'AValue',
       targetValueElement: 'BValue',
       forecastValue: 'CValue',
       criticality: 'DValue',
@@ -39,7 +40,6 @@
 
 在BulletChart中
 
-qualifier表示实际数量 图中为深色部分
 targetValueElement表示目标数量 图中为竖线
 forecastValue表示预测数量 图中为浅色部分
 criticality表示主题颜色
@@ -100,7 +100,6 @@ criticality表示主题颜色
 
   @UI:{
     dataPoint: { 
-      qualifier: 'AValue',
       targetValueElement: 'BValue',
       criticality: 'DValue',
     }
@@ -108,7 +107,7 @@ criticality表示主题颜色
   AValue;
 ```
 
-其中 qualifier为分子，targetValueElement为分母，图中显示为AValue/BValue的值，超过100%的则会显示为100%
+其中 当前字段为分子，targetValueElement为分母，图中显示为AValue/BValue的值，超过100%的则会显示为100%
 DValue是主题颜色
 
 ![RadialChart](./image/@UI.chart.RadialChart.png)
@@ -120,7 +119,6 @@ DValue是主题颜色
 ```abap
   @UI:{ 
     dataPoint: { 
-        qualifier: 'EValue',
         targetValue: 5,
         visualization: #RATING,
         title: 'Rating Indicator (#DataPointRating)'
@@ -231,8 +229,7 @@ DValue是主题颜色
     lineItem: [{ label: 'A', position: 50 }],
     // Search Term #AreaMicroChart
     dataPoint: {
-      qualifier: 'AValue',
-      targetValueElement: 'AValue',
+      targetValueElement: 'GValue',
       criticalityCalculation: {
         improvementDirection: #TARGET,
         toleranceRangeLowValueElement: 'CValue',
@@ -248,6 +245,11 @@ DValue是主题颜色
 ![AreaChart](./image/@UI.chart.AreaChart.png)
 数据部分
 ![AreaChartData](./image/@UI.chart.AreaChart_data.png)
+
+targetValueElement：是虚线部分
+toleranceRangeLowValueElement，toleranceRangeHighValueElement：表示绿色部分
+deviationRangeHighValueElement，deviationRangeLowValueElement：表示橙色部分
+如果有超出得数据则会表现为红色
 
 ## 6.LineChart
 
@@ -281,7 +283,6 @@ DValue是主题颜色
   @UI:{
     lineItem: [{ label: 'G', position: 110 }],
     dataPoint: {
-        qualifier: 'GValue',
         criticality: 'BValue'
       }
   }
@@ -290,7 +291,6 @@ DValue是主题颜色
 
   @UI:{
     dataPoint: {
-      qualifier: 'HValue',
       criticality: 'BValue'
     }
   }
@@ -330,7 +330,6 @@ DValue是主题颜色
 
   @UI:{
     dataPoint: {
-        qualifier: 'GValue',
         criticality: 'BValue'
       }
   }
@@ -367,7 +366,6 @@ DValue是主题颜色
 
   @UI:{
     dataPoint: {
-        qualifier: 'GValue',
         criticality: 'BValue'
       }
   }
