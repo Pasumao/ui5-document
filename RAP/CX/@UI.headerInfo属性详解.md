@@ -103,64 +103,35 @@ url: 相关URL链接
 
 
 #### **实例**
-
+```
 @UI.headerInfo: {
+   typeName: 'Product',
+   typeNamePlural: 'Products',
+   typeImageUrl: 'sap-icon://product',
+   imageUrl: 'https://example.com/images/prod_123.jpg',
 
-&nbsp; typeName: 'Product',
+   title: {
+     type: #STANDARD,
+     label: 'Product Name',
+     iconUrl: 'sap-icon://nutrition-activity',
+     criticality: #HIGH,
+     criticalityRepresentation: #WITHOUT_ICON,
+     value: 'Ultra HD Television',
+     valueQualifier: '',
+     targetElement: '',
+     url: ''
+   },
 
-&nbsp; typeNamePlural: 'Products',
-
-&nbsp; typeImageUrl: 'sap-icon://product',
-
-&nbsp; imageUrl: 'https://example.com/images/prod\_123.jpg',
-
-&nbsp; 
-
-&nbsp; title: {
-
-&nbsp;   type: #STANDARD,
-
-&nbsp;   label: 'Product Name',
-
-&nbsp;   iconUrl: 'sap-icon://nutrition-activity',
-
-&nbsp;   criticality: #HIGH,
-
-&nbsp;   criticalityRepresentation: #WITHOUT\_ICON,
-
-&nbsp;   value: 'Ultra HD Television',
-
-&nbsp;   valueQualifier: '',
-
-&nbsp;   targetElement: '',
-
-&nbsp;   url: ''
-
-&nbsp; },
-
-&nbsp; 
-
-&nbsp; description: {
-
-&nbsp;   type: #STANDARD,
-
-&nbsp;   label: 'Description',
-
-&nbsp;   iconUrl: 'sap-icon://detail-view',
-
-&nbsp;   criticality: #MEDIUM,
-
-&nbsp;   criticalityRepresentation: #WITH\_ICON,
-
-&nbsp;   value: '65-inch 4K Smart TV with HDR',
-
-&nbsp;   valueQualifier: '',
-
-&nbsp;   targetElement: '',
-
-&nbsp;   url: ''
-
-&nbsp; }
-
+   description: {
+     type: #STANDARD,
+     label: 'Description',
+     iconUrl: 'sap-icon://detail-view',
+     criticality: #MEDIUM,
+     criticalityRepresentation: #WITH_ICON,
+     value: '65-inch 4K Smart TV with HDR',
+     valueQualifier: '',
+     targetElement: '',
+     url: ''
+   }
 }
-
+```

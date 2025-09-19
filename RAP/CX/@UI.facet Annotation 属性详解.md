@@ -127,100 +127,57 @@ url: 关联的URL链接
 #### **e，实际应用示例**
 
 e-1. 标准字段组facet
-
-@UI.facet: \[{
-
-&nbsp; id: 'GeneralInfo',
-
-&nbsp; type: #FIELDGROUP,
-
-&nbsp; label: 'General Information',
-
-&nbsp; position: 10,
-
-&nbsp; purpose: #STANDARD
-
+```
+@UI.facet: [{
+   id: 'GeneralInfo',
+   type: #FIELDGROUP,
+   label: 'General Information',
+   position: 10,
+   purpose: #STANDARD
 }]
-
-
-
+```
 e-2. 表格行项目facet
-
-@UI.facet: \[{
-
-&nbsp; id: 'OrderItems',
-
-&nbsp; type: #LINEITEM,
-
-&nbsp; label: 'Order Items',
-
-&nbsp; position: 20,
-
-&nbsp; targetElement: 'ItemsTable'
-
+```
+@UI.facet: [{
+   id: 'OrderItems',
+   type: #LINEITEM,
+   label: 'Order Items',
+   position: 20,
+   targetElement: 'ItemsTable'
 }]
-
-
-
+```
 e-3. 图表facet
-
-@UI.facet: \[{
-
-&nbsp; id: 'SalesChart',
-
-&nbsp; type: #CHART,
-
-&nbsp; label: 'Sales Performance',
-
-&nbsp; position: 30,
-
-&nbsp; purpose: #STANDARD
-
+```
+@UI.facet: [{
+   id: 'SalesChart',
+   type: #CHART,
+   label: 'Sales Performance',
+   position: 30,
+   purpose: #STANDARD
 }]
-
-
-
+```
 e-4. 嵌套facet结构
-
-@UI.facet: \[{
-
-&nbsp; id: 'MainSection',
-
-&nbsp; label: 'Main Section',
-
-&nbsp; position: 10,
-
-&nbsp; type: #FIELDGROUP
-
+```
+@UI.facet: [{
+   id: 'MainSection',
+   label: 'Main Section',
+   position: 10,
+   type: #FIELDGROUP
 }, {
-
-&nbsp; id: 'SubSection',
-
-&nbsp; label: 'Details',
-
-&nbsp; position: 20,
-
-&nbsp; parentId: 'MainSection',
-
-&nbsp; type: #FIELDGROUP
-
+   id: 'SubSection',
+   label: 'Details',
+   position: 20,
+   parentId: 'MainSection',
+   type: #FIELDGROUP
 }]
-
-
-
+```
 e-5. 带重要性的facet
-
-@UI.facet: \[{
-
-&nbsp; id: 'CriticalInfo',
-
-&nbsp; label: 'Critical Information',
-
-&nbsp; position: 5,
-
-&nbsp; importance: #HIGH,
-
-&nbsp; type: #FIELDGROUP
-
+```
+@UI.facet: [{
+   id: 'CriticalInfo',
+   label: 'Critical Information',
+   position: 5,
+   importance: #HIGH,
+   type: #FIELDGROUP
 }]
-
+```
