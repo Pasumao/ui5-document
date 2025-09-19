@@ -75,36 +75,21 @@ element (可选但推荐)
 
 
 #### **b，完整示例**
-
-@UI.selectionField: \[{
-
-&nbsp; position: 10,
-
-&nbsp; element: 'SalesOrderID',
-
-&nbsp; qualifier: 'OrderFilter'
-
+```
+@UI.selectionField: [{
+   position: 10,
+   element: 'SalesOrderID',
+   qualifier: 'OrderFilter'
 }, {
-
-&nbsp; position: 20,
-
-&nbsp; element: 'CustomerName'
-
+   position: 20,
+   element: 'CustomerName'
 }, {
-
-&nbsp; position: 30,
-
-&nbsp; element: 'OrderDate',
-
-&nbsp; exclude: false
-
+   position: 30,
+   element: 'OrderDate',
+   exclude: false
 }, {
-
-&nbsp; position: 40,
-
-&nbsp; element: 'DeliveryStatus',
-
-&nbsp; qualifier: 'StatusFilter'
-
+   position: 40,
+   element: 'DeliveryStatus',
+   qualifier: 'StatusFilter'
 }]
-
+```

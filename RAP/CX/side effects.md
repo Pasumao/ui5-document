@@ -6,20 +6,15 @@
 ![alt text](<GIF/屏幕录制 2025-09-18 084910.gif>)
 
 behavior definition中
+```
+    side effects {
+        field OperandA affects field CalcResult;
+        field OperandB affects field CalcResult;
+        field Operator affects field CalcResult;
+    }
 
-&nbsp; side effects {
-
-&nbsp;   field OperandA affects field CalcResult;
-
-&nbsp;   field OperandB affects field CalcResult;
-
-&nbsp;   field Operator affects field CalcResult;
-
-&nbsp; }
-
-
-
-&nbsp; determination CalculateCalcResult on modify { field OperandA, OperandB, Operator; }
+    determination CalculateCalcResult on modify { field OperandA, OperandB, Operator; }
+ ```
 
 
 
@@ -34,166 +29,98 @@ CalcResult  输出结果
 
 
 可以在其括号内部列出哪个字段影响另一个字段
-
+```
 side effects
-
 {
 
 }
-
+```
 
 
 在行为投影中，您必须通过添加
-
+```
 use side effects;
-
+```
 
 
 
 
 * #### **Table**
 
-
-
+```
 @EndUserText.label : 'ycxpocket'
-
-@AbapCatalog.enhancement.category : #NOT\_EXTENSIBLE
-
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
 @AbapCatalog.tableCategory : #TRANSPARENT
-
 @AbapCatalog.deliveryClass : #A
-
 @AbapCatalog.dataMaintenance : #RESTRICTED
-
 define table ycxpocket {
-
-
-
-&nbsp; key client            : abap.clnt not null;
-
-&nbsp; key calc\_uuid         : sysuuid\_x16 not null;
-
-&nbsp; operand\_a             : abap.int4;
-
-&nbsp; operand\_b             : abap.int4;
-
-&nbsp; operator              : abap.char(1);
-
-&nbsp; calc\_result           : abap.fltp;
-
-&nbsp; created\_at            : abp\_creation\_tstmpl;
-
-&nbsp; created\_by            : abp\_creation\_user;
-
-&nbsp; last\_changed\_by       : abp\_lastchange\_user;
-
-&nbsp; last\_changed\_at       : abp\_lastchange\_tstmpl;
-
-&nbsp; local\_last\_changed\_at : abp\_locinst\_lastchange\_tstmpl;
-
-
-
+  key client            : abap.clnt not null;
+  key calc_uuid         : sysuuid_x16 not null;
+  operand_a             : abap.int4;
+  operand_b             : abap.int4;
+  operator              : abap.char(1);
+  calc_result           : abap.fltp;
+  created_at            : abp_creation_tstmpl;
+  created_by            : abp_creation_user;
+  last_changed_by       : abp_lastchange_user;
+  last_changed_at       : abp_lastchange_tstmpl;
+  local_last_changed_at : abp_locinst_lastchange_tstmpl;
 }
-
+```
 
 
 
 
 * #### Classes
 
-
-
+```
 METHOD CalculateCalcResult.
+    " 1. 读取当前数据
+    READ ENTITIES OF YCX_R_TEST_001  IN LOCAL MODE
+    ENTITY YCX_R_TEST_001
+      FIELDS ( OperandA OperandB Operator CalcResult )
+      WITH CORRESPONDING #( keys )
+      RESULT DATA(calculators).
 
-&nbsp;   " 1. 读取当前数据
+    " 2. 计算结果
+    LOOP AT calculators ASSIGNING FIELD-SYMBOL(<calc>).
+      CASE <calc>-Operator.
+        WHEN '+'.
+          <calc>-CalcResult = <calc>-OperandA + <calc>-OperandB.
+        WHEN '-'.
+          <calc>-CalcResult = <calc>-OperandA - <calc>-OperandB.
+        WHEN '*'.
+          <calc>-CalcResult = <calc>-OperandA * <calc>-OperandB.
+        WHEN '/'.
+          IF <calc>-OperandB <> 0.
+            <calc>-CalcResult = <calc>-OperandA / <calc>-OperandB.
+          ELSE.
+            <calc>-CalcResult = 0.
+          ENDIF.
+        WHEN OTHERS.
+          <calc>-CalcResult = 0.
+      ENDCASE.
+    ENDLOOP.
 
-&nbsp;   READ ENTITIES OF YCX\_R\_TEST\_001  IN LOCAL MODE
+    " 3. 更新结果字段
+    "MODIFY ENTITIES OF YCX_R_TEST_001 IN LOCAL MODE
+     " ENTITY YCX_R_TEST_001
+      "UPDATE SET FIELDS WITH VALUE #(
+       " FOR calc IN calculators
+        "( %tky   = calc-%tky
+         " CalcResult = calc-CalcResult )
+      ").
 
-&nbsp;   ENTITY YCX\_R\_TEST\_001
+      MODIFY ENTITIES OF YCX_R_TEST_001 IN LOCAL MODE
+      ENTITY YCX_R_TEST_001
+      UPDATE FIELDS ( CalcResult )
+      WITH VALUE #(
+        FOR calc IN calculators
+        ( %tky   = calc-%tky
+          CalcResult = calc-CalcResult )
+      ).
 
-&nbsp;     FIELDS ( OperandA OperandB Operator CalcResult )
-
-&nbsp;     WITH CORRESPONDING #( keys )
-
-&nbsp;     RESULT DATA(calculators).
-
-
-
-&nbsp;   " 2. 计算结果
-
-&nbsp;   LOOP AT calculators ASSIGNING FIELD-SYMBOL(<calc>).
-
-&nbsp;     CASE <calc>-Operator.
-
-&nbsp;       WHEN '+'.
-
-&nbsp;         <calc>-CalcResult = <calc>-OperandA + <calc>-OperandB.
-
-&nbsp;       WHEN '-'.
-
-&nbsp;         <calc>-CalcResult = <calc>-OperandA - <calc>-OperandB.
-
-&nbsp;       WHEN '\*'.
-
-&nbsp;         <calc>-CalcResult = <calc>-OperandA \* <calc>-OperandB.
-
-&nbsp;       WHEN '/'.
-
-&nbsp;         IF <calc>-OperandB <> 0.
-
-&nbsp;           <calc>-CalcResult = <calc>-OperandA / <calc>-OperandB.
-
-&nbsp;         ELSE.
-
-&nbsp;           <calc>-CalcResult = 0.
-
-&nbsp;         ENDIF.
-
-&nbsp;       WHEN OTHERS.
-
-&nbsp;         <calc>-CalcResult = 0.
-
-&nbsp;     ENDCASE.
-
-&nbsp;   ENDLOOP.
-
-
-
-&nbsp;   " 3. 更新结果字段
-
-&nbsp;   "MODIFY ENTITIES OF YCX\_R\_TEST\_001 IN LOCAL MODE
-
-&nbsp;    " ENTITY YCX\_R\_TEST\_001
-
-&nbsp;     "UPDATE SET FIELDS WITH VALUE #(
-
-&nbsp;      " FOR calc IN calculators
-
-&nbsp;       "( %tky   = calc-%tky
-
-&nbsp;        " CalcResult = calc-CalcResult )
-
-&nbsp;     ").
-
-&nbsp;     MODIFY ENTITIES OF YCX\_R\_TEST\_001 IN LOCAL MODE
-
-&nbsp;     ENTITY YCX\_R\_TEST\_001
-
-&nbsp;     UPDATE FIELDS ( CalcResult )
-
-&nbsp;     WITH VALUE #(
-
-&nbsp;       FOR calc IN calculators
-
-&nbsp;       ( %tky   = calc-%tky
-
-&nbsp;         CalcResult = calc-CalcResult )
-
-&nbsp;     ).
-
-
-
-&nbsp; ENDMETHOD.
-
+  ENDMETHOD.
+```
 
 

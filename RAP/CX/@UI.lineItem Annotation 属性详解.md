@@ -209,62 +209,36 @@ url: 链接URL(当type为#WITH\_URL时使用)
 
 
 #### **实际应用示例**
-
-@UI.lineItem: \[{
-
-&nbsp; position: 10,
-
-&nbsp; label: 'Order ID',
-
-&nbsp; type: #STANDARD,
-
-&nbsp; emphasized: true,
-
-&nbsp; importance: #HIGH,
-
-&nbsp; width: '100px'
-
+```
+@UI.lineItem: [{
+   position: 10,
+   label: 'Order ID',
+   type: #STANDARD,
+   emphasized: true,
+   importance: #HIGH,
+   width: '100px'
 }, {
-
-&nbsp; position: 20,
-
-&nbsp; label: 'Customer',
-
-&nbsp; type: #WITH\_URL,
-
-&nbsp; url: '/Customer/{CustomerID}',
-
-&nbsp; criticality: #INFORMATION,
-
-&nbsp; criticalityRepresentation: #WITH\_ICON
-
+   position: 20,
+   label: 'Customer',
+   type: #WITH_URL,
+   url: '/Customer/{CustomerID}',
+   criticality: #INFORMATION,
+   criticalityRepresentation: #WITH_ICON
 }, {
-
-&nbsp; position: 30,
-
-&nbsp; label: 'Status',
-
-&nbsp; type: #STANDARD,
-
-&nbsp; criticality: {
-
-&nbsp;   path: 'OverallStatus',
-
-&nbsp;   criticalityRepresentation: #WITH\_ICON,
-
-&nbsp;   values: {
-
-&nbsp;     'C': #CRITICAL,
-
-&nbsp;     'P': #WARNING,
-
-&nbsp;     'D': #SUCCESS
-
-&nbsp;   }
-
-&nbsp; }
-
+   position: 30,
+   label: 'Status',
+   type: #STANDARD,
+   criticality: {
+     path: 'OverallStatus',
+     criticalityRepresentation: #WITH_ICON,
+     values: {
+       'C': #CRITICAL,
+       'P': #WARNING,
+       'D': #SUCCESS
+     }
+   }
 }]
+```
 
 
 
