@@ -283,7 +283,7 @@ deviationRangeHighValueElement，deviationRangeLowValueElement：表示橙色部
   @UI:{
     lineItem: [{ label: 'G', position: 110 }],
     dataPoint: {
-        criticality: 'BValue'
+        criticality: 'criticalityValue'
       }
   }
   @EndUserText.label: 'Value G'
@@ -291,7 +291,7 @@ deviationRangeHighValueElement，deviationRangeLowValueElement：表示橙色部
 
   @UI:{
     dataPoint: {
-      criticality: 'BValue'
+      criticality: 'criticalityValue'
     }
   }
   @EndUserText.label: 'Value H'
