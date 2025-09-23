@@ -2,7 +2,7 @@
 
 注意 ： datapoint内不要写qualifier，如果要写也一定要和字段名一样，不然会报错
 
-## 1. BulletChart
+## 1. BulletChart 子弹图
 
 ### 定义
 
@@ -76,7 +76,7 @@ criticality表示主题颜色
   }
 ```
 
-## 2. RadialChart
+## 2. RadialChart 径向图
 
 ### 定义
 
@@ -112,7 +112,7 @@ DValue是主题颜色
 
 ![RadialChart](./image/@UI.chart.RadialChart.png)
 
-## 3.Rating
+## 3.Rating 评级
 
 ### 定义
 
@@ -158,7 +158,7 @@ DValue是主题颜色
   }
 ```
 
-## 4.饼图 (有问题)
+## 4.HarveyChart 饼图 (有问题)
 
 ### 定义
 
@@ -201,7 +201,7 @@ DValue是主题颜色
 
 原则上是maximumValue设定最大值，但是实际并不生效，饼图无论如何在RAP上目前只能这么展示。
 
-## 5.AreaChart
+## 5.AreaChart 面积图
 
 ### 定义
 
@@ -251,7 +251,7 @@ toleranceRangeLowValueElement，toleranceRangeHighValueElement：表示绿色部
 deviationRangeHighValueElement，deviationRangeLowValueElement：表示橙色部分
 如果有超出得数据则会表现为红色
 
-## 6.LineChart
+## 6.LineChart 折线图
 
 ### 定义
 
@@ -304,7 +304,7 @@ deviationRangeHighValueElement，deviationRangeLowValueElement：表示橙色部
 
 如无特殊后续不标注引用图表的代码
 
-## 7.ColumnChart
+## 7.ColumnChart 柱状图
 
 ### 定义
 
@@ -340,7 +340,7 @@ deviationRangeHighValueElement，deviationRangeLowValueElement：表示橙色部
 ![ColumnChart](./image/@UI.chart.ColumnChart.png)
 数据同上
 
-## 8.StackedBar
+## 8.StackedBar 堆叠条形图
 
 ### 定义
 
@@ -376,7 +376,7 @@ deviationRangeHighValueElement，deviationRangeLowValueElement：表示橙色部
 ![StackedBar](./image/@UI.chart.StackedBar.png)
 数据同上
 
-## 9.Comparison Chart
+## 9.Comparison Chart 对比图
 
 ### 定义
 
