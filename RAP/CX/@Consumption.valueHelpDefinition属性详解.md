@@ -59,7 +59,7 @@ element：值帮助实体中返回的字段名。
 
 
 
-f. additionalBinding
+###### f. additionalBinding
 
 说明：向值帮助传递额外参数（如过滤条件）。
 
@@ -91,7 +91,7 @@ f. additionalBinding
 
 ###### **j.关键使用场景**
 
-动态过滤：通过 additionalBinding 将当前字段值传递给值帮助（如根据国家筛选物料）。
+动态过滤：通过 [additionalBinding](#additionalbinding) 将当前字段值传递给值帮助（如根据国家筛选物料）。
 
 
 
@@ -162,3 +162,17 @@ define view entity YCX_VH_VALUEHELP as select from ycxvaluehelp
 {...}
 ```
 
+## additionalBinding
+> 要实现以下功能需要要用到@Consumption.valueHelpDefinition中的additionalBinding，localElement设置与Criticality一起改变的字段
+> FieldWithCriticality
+> 
+cds
+```
+@Consumption.valueHelpDefinition: [{ entity: { name: 'YCX_I_CRITICALITY', element: 'Code' },
+                                    additionalBinding: [{ element: 'Name',
+                                                                localElement: 'FieldWithCriticality',
+                                                                usage: #RESULT }] } ]
+Criticality
+```
+
+![alt text](GIF/additionalBinding.gif)
