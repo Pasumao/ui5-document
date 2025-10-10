@@ -1,6 +1,8 @@
 # @UI.chart
 
-注意 ： datapoint内不要写qualifier，如果要写也一定要和字段名一样，不然会报错
+注意 ：
+1.datapoint内不要写qualifier，如果要写也一定要和字段名一样，不然会报错
+2.facet里purpose: #STANDARD内不能画图表，odatav4不支持
 
 ## 1. BulletChart 子弹图
 
