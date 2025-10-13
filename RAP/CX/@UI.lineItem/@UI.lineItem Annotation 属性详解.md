@@ -288,5 +288,24 @@ ValueHelpId;
 ![alt text](PNG/AS_DATAPOINT.png)
 
 
+## inline
+```
+@UI:{
+   lineItem: [
+      {
+      type:#FOR_ACTION,
+      label: 'Change Criticality',
+      dataAction: 'changeCriticality',
+      inline: true,
+      emphasized: true,
+      importance: #HIGH,
+      position: 100
+      }
+   ]
+}
+Criticality;
+```
+![alt text](PNG/inline.png)
+
 
 [回到顶部](#)

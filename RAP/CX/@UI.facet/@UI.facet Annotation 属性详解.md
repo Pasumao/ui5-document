@@ -38,7 +38,7 @@
 > 
 > hidden: true/false - 是否隐藏此facet（用户可通过个性化设置显示）
 > 
-> isPartOfPreview: true/false - 是否包含在预览中
+> [isPartOfPreview: true/false](#ispartofpreview) - 是否包含在预览中
 > 
 > isSummary: true/false - 是否为摘要facet
 > 
@@ -291,6 +291,33 @@ TargetValue;
 ]
 ```
 ![alt text](<PNG/PRESENTATIONVARIANT_REFERENCE 2025-09-26 155249.png>)
+
+#### isPartOfPreview
+> 需要用到isPartOfPreview: false，还要用到targetQualifier: 'chartDataPreview'在需要隐藏的字段中设置qualifier: 'chartDataPreview'
+```
+@UI.facet:[
+   {
+      purpose: #STANDARD,
+      type: #COLLECTION,
+      label: 'Micro Chart Data(#MicroChartDataSection)',
+      id: 'chartDataCollection'
+   },
+   {
+      parentId   : 'chartDataCollection',
+      label      : 'Chart Data Preview (#Preview)',
+      type       : #FIELDGROUP_REFERENCE,
+      targetQualifier: 'chartDataPreview',
+      isPartOfPreview: false
+   },
+   {
+      parentId   : 'chartDataCollection',
+      label      : 'Chart Data Preview Show (#Preview)',
+      type       : #FIELDGROUP_REFERENCE,
+      targetQualifier: 'showview'
+   }
+]
+```
+![alt text](GIF/isPartOfPreview.gif)
 
 ## #HEADER
 #### type:#CHART_REFERENCE
