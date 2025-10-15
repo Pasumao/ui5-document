@@ -30,6 +30,8 @@ npm install --save-dev @babel/preset-typescript babel-preset-transform-ui5
 
 # 3. 运行命令
 
+如果没有效果，请在powershell试一下
+
 ```bash
 npx babel webapp/controller/ANTLR4 --out-dir webapp/controller/ANTLR4_ui5 --extensions “.ts,.js”
 ```
