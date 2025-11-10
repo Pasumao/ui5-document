@@ -1,6 +1,7 @@
 * ### **side effects**
 
 可以在 RAP 业务对象的行为定义 ( behavior definition ) 中配置副作用。
+Side effects 会重新加载屏幕，但不会重新加载整个屏幕 
 
 这里做个简单的计算应用程序。
 ![alt text](<GIF/屏幕录制 2025-09-18 084910.gif>)

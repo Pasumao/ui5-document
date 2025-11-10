@@ -21,9 +21,12 @@
 > @Semantics.telephone.type: [ #PREF ] - 生成电话链接
 >
 > [@Semantics.quantity.unitOfMeasure : 'ycxmaintable.uom'](#semanticsquantityunitofmeasure)  - 语义注释允许对仅对消费方有影响的语义（例如货币代码表示和金额）进行标准化。
-
-
-
+>
+> [@Semantics.imageUrl: true](#semanticsimageurl-true) - 会把图片url转成图片
+>
+> [@Semantics.largeObject](#semanticslargeobject-and-semanticsmimetype) - 可以为 RAP 应用程序启用维护大型对象（LOB）的功能
+>
+> [@Semantics.mimeType: true](#semanticslargeobject-and-semanticsmimetype) - 定义字段类型为MimeType
 
 
 
@@ -139,4 +142,68 @@ FieldWithQuantity;
 ```
 
 ![alt text](PNG/Semantics.quantity.unitOfMeasure.png)
-![alt text](PNG/Semantics.quantity.unitOfMeasure2.png)
+![alt text](PNG/Semantics.quantity.unitOfMeasure2.png) 
+
+
+## @Semantics.imageUrl: true
+> image_url字段类型为abap.char(256);还需用到@UI.lineItem在表中显示
+cds
+```
+@Semantics.imageUrl: true
+image_url as ImageUrl,
+```
+![alt text](PNG/Semantics.imageUrl.png)
+
+
+## @Semantics.largeObject and @Semantics.mimeType
+> 为用户提供了在编辑实体实例时包含外部二进制文件或文本文件的选项。首先，应在数据库表和 CDS 视图中添加适当的字段，并添加注释 @Semantics.largeObject 和 @Semantics.mimeType。若要在表格中显示，您还需要注释 @UI.lineItem。
+>
+> 注意如果上传完图片，在子页面没有显示，请清理一下缓存再重新尝试
+>
+> 想让图片显示在子页面header中请看[@UI.headerInfo属性详解](@UI.headerInfo/@UI.headerInfo属性详解.md)中的imageUrl部分 只需要在imageUrl中填入StreamFile字段  
+
+
+cds
+```
+StreamFilename,
+
+@Semantics.largeObject: {
+  acceptableMimeTypes: [ 'image/*', 'application/*' ],  // 为相关流属性提供可接受的MIME类型列表，以根据此限制或验证用户输入。若接受任意子类型，可用 * 号表示。
+  cacheControl.maxAge: #MEDIUM,  // 缓存控制最大时间
+  contentDispositionPreference: #ATTACHMENT , // #ATTACHMENT - download as file
+                                            // #INLINE - 浏览器直接预览
+  fileName: 'StreamFilename',
+  mimeType: 'StreamMimeType'
+}
+StreamFile,
+
+@Semantics.mimeType: true
+StreamMimetype
+```
+
+table
+```
+@EndUserText.label : 'YCXCHILD'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #RESTRICTED
+define table ycxchild {
+
+  key client         : abap.clnt not null;
+  key id             : sysuuid_x16 not null;
+  parent_id          : sysuuid_x16;
+  string_property    : abap.char(1024);
+  field_with_percent : abap.dec(5,2);
+  boolean_property   : abap_boolean;
+  criticality_code   : /dmo/fsa_criticality;
+  stream_is_readonly : abap_boolean;
+  stream_filename    : abap.char(128);
+  stream_mimetype    : abap.char(128);
+  stream_file        : abap.rawstring(0);
+  child_pieces       : abap.int4;
+
+}
+```
+
+![alt text](GIF/Semantics.largeObject.gif)
