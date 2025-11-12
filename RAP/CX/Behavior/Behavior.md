@@ -149,7 +149,7 @@ Behavior
   static action ( authorization : global ) staticAction;
 ```
 
-> 下面功能是找到数据中的 Name 值为 陈旭 的数据，并清除对应 city 上的值
+> 下面功能是找到数据中的 Name 值为 陈旭 的数据，并清除对应 city 上的值，还有些问题点击按钮后得刷新之后才能看到city清除数据效果
 > 
 Classes
 ```
@@ -236,6 +236,9 @@ ENDMETHOD.
 [side effects](<../side effects.md>)
 
 ## validation 
+
+
+
 
 
 ## determination

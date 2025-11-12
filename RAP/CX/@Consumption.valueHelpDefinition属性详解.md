@@ -85,7 +85,7 @@ element：值帮助实体中返回的字段名。
 
 ###### **h. presentationVariantQualifier**
 
-说明：关联 @UI.presentationVariant 注解，控制值帮助的排序/分组/列显示。
+说明：关联 [@UI.presentationVariant](@UI.presentationVariant.md) 注解，控制值帮助的排序/分组/列显示。
 
 
 
