@@ -1,6 +1,10 @@
 # @UI.chart
 
-## 1. BulletChart
+注意 ：
+1.datapoint内不要写qualifier，如果要写也一定要和字段名一样，不然会报错
+2.facet里purpose: #STANDARD内不能画图表，odatav4不支持
+
+## 1. BulletChart 子弹图
 
 ### 定义
 
@@ -24,7 +28,6 @@
 
   @UI:{
     dataPoint: { 
-      qualifier: 'AValue',
       targetValueElement: 'BValue',
       forecastValue: 'CValue',
       criticality: 'DValue',
@@ -39,7 +42,6 @@
 
 在BulletChart中
 
-qualifier表示实际数量 图中为深色部分
 targetValueElement表示目标数量 图中为竖线
 forecastValue表示预测数量 图中为浅色部分
 criticality表示主题颜色
@@ -76,7 +78,7 @@ criticality表示主题颜色
   }
 ```
 
-## 2. RadialChart
+## 2. RadialChart 径向图
 
 ### 定义
 
@@ -100,7 +102,6 @@ criticality表示主题颜色
 
   @UI:{
     dataPoint: { 
-      qualifier: 'AValue',
       targetValueElement: 'BValue',
       criticality: 'DValue',
     }
@@ -108,19 +109,18 @@ criticality表示主题颜色
   AValue;
 ```
 
-其中 qualifier为分子，targetValueElement为分母，图中显示为AValue/BValue的值，超过100%的则会显示为100%
+其中 当前字段为分子，targetValueElement为分母，图中显示为AValue/BValue的值，超过100%的则会显示为100%
 DValue是主题颜色
 
 ![RadialChart](./image/@UI.chart.RadialChart.png)
 
-## 3.Rating
+## 3.Rating 评级
 
 ### 定义
 
 ```abap
   @UI:{ 
     dataPoint: { 
-        qualifier: 'EValue',
         targetValue: 5,
         visualization: #RATING,
         title: 'Rating Indicator (#DataPointRating)'
@@ -160,11 +160,50 @@ DValue是主题颜色
   }
 ```
 
-原则上是这样，但是我遇到了不明bug在表中不显示
+## 4.HarveyChart 饼图 (有问题)
 
-## 4.饼图 有问题先欠着
+### 定义
 
-## 5.AreaChart
+```abap
+@UI.chart: [
+  {
+    qualifier: 'harveyChart',
+    title: 'Harvey Micro Chart (#HarveyMicroChart)',
+    description: 'This is Harvey Micro Chart',
+    chartType: #PIE,
+    measures: ['BValue'],
+    measureAttributes: [
+      {
+        measure: 'BValue',
+        asDataPoint: true
+      }
+    ]
+  }
+]
+  @UI:{ 
+    lineItem: [
+      { 
+        label: 'PIE B', 
+        position: 40, 
+        type: #AS_CHART, 
+        valueQualifier: 'harveyChart' 
+      }
+    ],
+    dataPoint:{ 
+      maximumValue: 100.00,
+      criticality: 'FValue'
+    },
+    fieldGroup: [{ qualifier: 'value_fg', position: 20 }]
+  }
+  @EndUserText.label: 'Value B'
+  BValue;
+```
+
+![harveyChart](./image/@UI.chart.harveyChart.png)
+
+原则上是maximumValue设定最大值，但是实际并不生效，饼图无论如何在RAP上目前只能这么展示。
+
+## 5.AreaChart 面积图
 
 ### 定义
 
@@ -192,8 +231,7 @@ DValue是主题颜色
     lineItem: [{ label: 'A', position: 50 }],
     // Search Term #AreaMicroChart
     dataPoint: {
-      qualifier: 'AValue',
-      targetValueElement: 'AValue',
+      targetValueElement: 'GValue',
       criticalityCalculation: {
         improvementDirection: #TARGET,
         toleranceRangeLowValueElement: 'CValue',
@@ -210,7 +248,12 @@ DValue是主题颜色
 数据部分
 ![AreaChartData](./image/@UI.chart.AreaChart_data.png)
 
-## 6.LineChart
+targetValueElement：是虚线部分
+toleranceRangeLowValueElement，toleranceRangeHighValueElement：表示绿色部分
+deviationRangeHighValueElement，deviationRangeLowValueElement：表示橙色部分
+如果有超出得数据则会表现为红色
+
+## 6.LineChart 折线图
 
 ### 定义
 
@@ -242,8 +285,7 @@ DValue是主题颜色
   @UI:{
     lineItem: [{ label: 'G', position: 110 }],
     dataPoint: {
-        qualifier: 'GValue',
-        criticality: 'BValue'
+        criticality: 'criticalityValue'
       }
   }
   @EndUserText.label: 'Value G'
@@ -251,8 +293,7 @@ DValue是主题颜色
 
   @UI:{
     dataPoint: {
-      qualifier: 'HValue',
-      criticality: 'BValue'
+      criticality: 'criticalityValue'
     }
   }
   @EndUserText.label: 'Value H'
@@ -265,7 +306,7 @@ DValue是主题颜色
 
 如无特殊后续不标注引用图表的代码
 
-## 7.ColumnChart
+## 7.ColumnChart 柱状图
 
 ### 定义
 
@@ -291,7 +332,6 @@ DValue是主题颜色
 
   @UI:{
     dataPoint: {
-        qualifier: 'GValue',
         criticality: 'BValue'
       }
   }
@@ -302,7 +342,7 @@ DValue是主题颜色
 ![ColumnChart](./image/@UI.chart.ColumnChart.png)
 数据同上
 
-## 8.StackedBar
+## 8.StackedBar 堆叠条形图
 
 ### 定义
 
@@ -328,7 +368,6 @@ DValue是主题颜色
 
   @UI:{
     dataPoint: {
-        qualifier: 'GValue',
         criticality: 'BValue'
       }
   }
@@ -339,7 +378,7 @@ DValue是主题颜色
 ![StackedBar](./image/@UI.chart.StackedBar.png)
 数据同上
 
-## 9.Comparison Chart
+## 9.Comparison Chart 对比图
 
 ### 定义
 
