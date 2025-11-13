@@ -1,7 +1,7 @@
 # Metadata Annotation用法
  1. **isPartOfPreview ： 展开/折叠**<br>
    **True: 展开  False : 折叠**
- ```
+ ```abap
  @UI.facet: [
    {
       parentId   : 'chartDataCollection',
@@ -14,12 +14,12 @@
  ```  
 
 2. **编辑模式下可见**(상세화면 리스트에서도 먹히는지 확인 필요)
-```
+```abap
 hidden: #( IsActiveEntity )
 ```
 
 3. **制作Field Group方法**
-```
+```abap
 @UI.facet: [
    {
       parentId: 'SonTab1',          "我要插入的ID
@@ -44,7 +44,7 @@ hidden: #( IsActiveEntity )
 ```
 
 4. **制作父子标签页的方法**
-```
+```abap
 @UI.facet: [
    {
       purpose: #STANDARD,
@@ -72,7 +72,7 @@ hidden: #( IsActiveEntity )
 ]
 ```
 5. **制作List按钮**
-```
+```abap
 @UI.lineItem: [
    { 
       type: #FOR_ACTION,
@@ -85,7 +85,7 @@ hidden: #( IsActiveEntity )
 ```
 
 6. **点击按钮打开报错消息(1)**
-```
+```abap
   METHOD TabButton.
     READ ENTITIES OF zll_r_test1 IN LOCAL MODE
         ENTITY main
@@ -107,7 +107,7 @@ hidden: #( IsActiveEntity )
 ![alt text](img/fail_message.png)
 
 7. **点击按钮打开报错消息(2)**
-```
+```abap
 APPEND VALUE #( %msg = new_message_with_text(
                   severity = if_abap_behv_message=>severity-success
                   text     = 'Tab Button Pressed'
@@ -116,15 +116,15 @@ APPEND VALUE #( %msg = new_message_with_text(
 ```
 * SUCCESS - 成功<br>
 ![SUCCESS](img/SUCCESS.png)
-* ERROR - 错误
+* ERROR - 错误<br>
 ![ERROR](img/ERROR.png)
-* WARNING - 警告
+* WARNING - 警告<br>
 ![WARNING](img/WARNING.png)
-* INFORMATION - 信息
+* INFORMATION - 信息<br>
 ![INFORMATION](img/INFORMATION.png)
 
 8. **制作星评分**
-```
+```abap
   @UI:{ 
     dataPoint:{
         qualifier: 'Stars',
@@ -147,8 +147,39 @@ APPEND VALUE #( %msg = new_message_with_text(
     }]
   }
 ```
-![alt text](img/star.png)
+![star](img/star.png)
 - dataPoint:制作样式的部分(qualifier的值必须要和字段名称一样) 
 - targetValue： 星星的个数
 
-9. **制作星评分**
+9. **密码效果**
+```abap
+ masked: true
+```
+![password](img/password.png)
+
+10. **制作Navigation**
+```abap
+  "在CDS View里连接navigation要做的表格
+   @ObjectModel.foreignKey.association: '_Navigation'
+   navigation_id         as NavigationID,
+```
+![Navigation](img/navigation.png)
+
+11. **字段加粗显示**
+```abap
+"只对LIST字段起作用
+@ObjectModel.semanticKey: ['LocalLastChangedBy']
+```
+
+12. **行设置颜色**
+```abap
+   "ChartColor: 颜色字段(必须要使用字段不能输入数字)
+   @UI.lineItem: [{ criticality: 'ChartColor' }]
+```
+![color](img/color.png)
+* 颜色可以给按钮也加颜色  
+```abap
+    criticality: 'ChartColor' 
+```
+
+13. 

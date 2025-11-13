@@ -1,0 +1,1554 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="SAP__aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="SAP__capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="SAP__common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CORE',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Core.V1" Alias="SAP__core"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HIERARCHY',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Hierarchy.v1" Alias="SAP__hierarchy"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HTML5',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.HTML5.v1" Alias="SAP__HTML5"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="SAP__measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ODM',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.ODM.v1" Alias="SAP__ODM"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PDF',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.PDF.v1" Alias="SAP__PDF"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_SESSION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="SAP__session"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="SAP__UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="SAP__validation"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="com.sap.gateway.srvd.zll_ui_test1.v0001" Alias="SAP__self">
+            <Annotation Term="SAP__core.SchemaVersion" String="1.0.0"/>
+            <EntityType Name="NavigationType">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Age" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="LocalLastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+            </EntityType>
+            <EntityType Name="CriticalityType">
+                <Key>
+                    <PropertyRef Name="Code"/>
+                </Key>
+                <Property Name="Code" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="Name" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="1024"/>
+            </EntityType>
+            <EntityType Name="I_DraftAdministrativeDataType">
+                <Key>
+                    <PropertyRef Name="DraftUUID"/>
+                    <PropertyRef Name="DraftEntityType"/>
+                </Key>
+                <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="DraftEntityType" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreatedByUser" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedByUser" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="DraftAccessType" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="ProcessingStartDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="InProcessByUser" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="DraftIsKeptByUser" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="EnqueueStartDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="DraftIsLastChangedByMe" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="CreatedByUserDescription" Type="Edm.String" Nullable="false" MaxLength="80"/>
+                <Property Name="LastChangedByUserDescription" Type="Edm.String" Nullable="false" MaxLength="80"/>
+                <Property Name="InProcessByUserDescription" Type="Edm.String" Nullable="false" MaxLength="80"/>
+            </EntityType>
+            <EntityType Name="ZLL_C_TEST1Type">
+                <Key>
+                    <PropertyRef Name="GroupId"/>
+                    <PropertyRef Name="IsActiveEntity"/>
+                </Key>
+                <Property Name="GroupId" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Attachment" Type="Edm.Stream"/>
+                <Property Name="ImgSrc" Type="Edm.Stream"/>
+                <Property Name="Mimetype" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="Filename" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="Url" Type="Edm.String" Nullable="false" MaxLength="256"/>
+                <Property Name="UrlText" Type="Edm.String" Nullable="false" MaxLength="256"/>
+                <Property Name="Stars" Type="Edm.Double" Nullable="false"/>
+                <Property Name="NavigationID" Type="Edm.Guid"/>
+                <Property Name="PieValue" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3"/>
+                <Property Name="PieValue2" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3"/>
+                <Property Name="ProgressValue" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="ChartColor" Type="Edm.Byte"/>
+                <Property Name="TargetValue" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="ColorTxt" Type="Edm.String" Nullable="false" MaxLength="42"/>
+                <Property Name="CreateDate" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="CreateBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="LocalLastChangedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="LocalLastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="DraftEntityCreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="DraftEntityLastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="__EntityControl" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.EntityControl"/>
+                <Property Name="__OperationControl" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1OperationControl"/>
+                <Property Name="SAP__Messages" Type="Collection(com.sap.gateway.srvd.zll_ui_test1.v0001.SAP__Message)" Nullable="false"/>
+                <NavigationProperty Name="DraftAdministrativeData" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.I_DraftAdministrativeDataType"/>
+                <NavigationProperty Name="SiblingEntity" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type"/>
+                <NavigationProperty Name="_Criticality" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.CriticalityType">
+                    <ReferentialConstraint Property="ChartColor" ReferencedProperty="Code"/>
+                </NavigationProperty>
+                <NavigationProperty Name="_Navigation" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.NavigationType">
+                    <ReferentialConstraint Property="NavigationID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+            </EntityType>
+            <ComplexType Name="ZLL_C_TEST1OperationControl">
+                <Property Name="changeColor" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="copyInstance" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="Edit" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="ListButton" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="TabButton" Type="Edm.Boolean" Nullable="false"/>
+            </ComplexType>
+            <ComplexType Name="ZLL_C_TEST1">
+                <Property Name="Attachment" Type="Edm.Stream" Nullable="false"/>
+                <Property Name="ChartColor" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="ColorTxt" Type="Edm.String" Nullable="false" MaxLength="42"/>
+                <Property Name="CreateBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="CreateDate" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="DraftEntityCreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="DraftEntityLastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="Filename" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="GroupId" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="ImgSrc" Type="Edm.Stream" Nullable="false"/>
+                <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LocalLastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LocalLastChangedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="Mimetype" Type="Edm.String" Nullable="false" MaxLength="128"/>
+                <Property Name="NavigationID" Type="Edm.Guid"/>
+                <Property Name="PieValue" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3"/>
+                <Property Name="PieValue2" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="3"/>
+                <Property Name="ProgressValue" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Stars" Type="Edm.Double" Nullable="false"/>
+                <Property Name="TargetValue" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="Url" Type="Edm.String" Nullable="false" MaxLength="256"/>
+                <Property Name="UrlText" Type="Edm.String" Nullable="false" MaxLength="256"/>
+            </ComplexType>
+            <ComplexType Name="EntityControl">
+                <Property Name="Deletable" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="Updatable" Type="Edm.Boolean" Nullable="false"/>
+            </ComplexType>
+            <ComplexType Name="SAP__Message">
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <Property Name="message" Type="Edm.String" Nullable="false"/>
+                <Property Name="target" Type="Edm.String"/>
+                <Property Name="additionalTargets" Type="Collection(Edm.String)" Nullable="false"/>
+                <Property Name="transition" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="numericSeverity" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="longtextUrl" Type="Edm.String"/>
+            </ComplexType>
+            <Action Name="Prepare" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+            </Action>
+            <Action Name="Resume" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+            </Action>
+            <Action Name="Activate" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+            </Action>
+            <Action Name="Edit" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+                <Parameter Name="PreserveChanges" Type="Edm.Boolean" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+            </Action>
+            <Action Name="ListButton" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+            </Action>
+            <Action Name="copyInstance" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+                <Parameter Name="ResultIsActiveEntity" Type="Edm.Boolean" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+            </Action>
+            <Action Name="TabButton" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+            </Action>
+            <Action Name="Discard" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+            </Action>
+            <Action Name="changeColor" EntitySetPath="_it" IsBound="true">
+                <Parameter Name="_it" Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+                <Parameter Name="color_code" Type="Edm.Byte" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type" Nullable="false"/>
+            </Action>
+            <Function Name="GetDefaultsForCreate" IsBound="true">
+                <Parameter Name="_it" Type="Collection(com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type)" Nullable="false"/>
+                <ReturnType Type="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1" Nullable="false"/>
+            </Function>
+            <EntityContainer Name="Container">
+                <EntitySet Name="Criticality" EntityType="com.sap.gateway.srvd.zll_ui_test1.v0001.CriticalityType"/>
+                <EntitySet Name="I_DraftAdministrativeData" EntityType="com.sap.gateway.srvd.zll_ui_test1.v0001.I_DraftAdministrativeDataType"/>
+                <EntitySet Name="Navigation" EntityType="com.sap.gateway.srvd.zll_ui_test1.v0001.NavigationType"/>
+                <EntitySet Name="ZLL_C_TEST1" EntityType="com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type">
+                    <NavigationPropertyBinding Path="DraftAdministrativeData" Target="I_DraftAdministrativeData"/>
+                    <NavigationPropertyBinding Path="SiblingEntity" Target="ZLL_C_TEST1"/>
+                    <NavigationPropertyBinding Path="_Criticality" Target="Criticality"/>
+                    <NavigationPropertyBinding Path="_Navigation" Target="Navigation"/>
+                </EntitySet>
+            </EntityContainer>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/Attachment">
+                <Annotation Term="SAP__core.MediaType" Path="Mimetype"/>
+                <Annotation Term="SAP__core.ContentDisposition">
+                    <Record>
+                        <PropertyValue Property="Filename" Path="Filename"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/ColorTxt">
+                <Annotation Term="SAP__common.Label" String="中文"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/CreateBy">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="创建人"/>
+                <Annotation Term="SAP__common.QuickInfo" String="创建人用户"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_CREATION_USER"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/GroupId">
+                <Annotation Term="SAP__common.Label" String="그룹 아이디"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/HasActiveEntity">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="具有活动文档"/>
+                <Annotation Term="SAP__common.Heading" String="有活动文档"/>
+                <Annotation Term="SAP__common.QuickInfo" String="草稿 - 指示器 - 具有活动文档"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/HasDraftEntity">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="有草稿"/>
+                <Annotation Term="SAP__common.QuickInfo" String="草稿 - 指示器 - 具有草稿文档"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/ImgSrc">
+                <Annotation Term="SAP__core.MediaType" Path="Mimetype"/>
+                <Annotation Term="SAP__core.ContentDisposition">
+                    <Record>
+                        <PropertyValue Property="Filename" Path="Filename"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/IsActiveEntity">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="处于活动状态"/>
+                <Annotation Term="SAP__common.Heading" String="是活动文档"/>
+                <Annotation Term="SAP__common.QuickInfo" String="草稿 - 指示器 - 是活动文档"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/LocalLastChangedBy">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="更改人"/>
+                <Annotation Term="SAP__common.QuickInfo" String="本地实例最后更改用户"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LOCINST_LASTCHANGE_USER"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/NavigationID">
+                <Annotation Term="SAP__common.QuickInfo" String="QuickView"/>
+                <Annotation Term="SAP__common.Label" String="Search Navigation"/>
+                <Annotation Term="SAP__common.Heading" String="UUID"/>
+            </Annotations>
+            <Annotations Target="SAP__self.NavigationType/ID">
+                <Annotation Term="SAP__common.Text" Path="Name">
+                    <Annotation Term="SAP__UI.TextArrangement" EnumMember="SAP__UI.TextArrangementType/TextOnly"/>
+                </Annotation>
+                <Annotation Term="SAP__common.Label" String="UUID"/>
+                <Annotation Term="SAP__common.QuickInfo" String="16 Byte UUID in 16 Bytes (Raw Format)"/>
+            </Annotations>
+            <Annotations Target="SAP__self.NavigationType/Name">
+                <Annotation Term="SAP__common.Label" String="이름"/>
+                <Annotation Term="SAP__UI.MultiLineText"/>
+            </Annotations>
+            <Annotations Target="SAP__self.NavigationType/Age">
+                <Annotation Term="SAP__common.Label" String="나이"/>
+            </Annotations>
+            <Annotations Target="SAP__self.NavigationType">
+                <Annotation Term="SAP__common.ChangedAt" Path="LastChangedAt"/>
+                <Annotation Term="SAP__common.Label" String="LL Navigation CDS"/>
+                <Annotation Term="SAP__UI.QuickViewFacets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="이름정보"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.FieldGroup#data"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.Facets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Navigational Properties"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.Identification"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.FieldGroup" Qualifier="data">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="Name"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="Age"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderInfo">
+                    <Record>
+                        <PropertyValue Property="TypeName" String="이름정보"/>
+                        <PropertyValue Property="TypeNamePlural" String="Navigations"/>
+                        <PropertyValue Property="TypeImageUrl" String="sap-icon://accelerated"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="Name"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="Age"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.Identification">
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="Name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.LineItem">
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="Name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.SemanticObject" String="Infomation"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/Navigation">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.CriticalityType/Code">
+                <Annotation Term="SAP__common.Label" String="번호"/>
+                <Annotation Term="SAP__common.Text" Path="Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CriticalityType/Description">
+                <Annotation Term="SAP__common.Label" String="설명"/>
+            </Annotations>
+            <Annotations Target="SAP__self.CriticalityType">
+                <Annotation Term="SAP__common.Label" String="LL COLOR CDS VIEW"/>
+                <Annotation Term="SAP__UI.QuickViewFacets">
+                    <Collection>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="색상 설정"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.FieldGroup#View"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.FieldGroup" Qualifier="View">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="Code"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="Description"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderInfo">
+                    <Annotation Term="SAP__core.Messages">
+                        <Collection>
+                            <Record>
+                                <PropertyValue Property="message" String="UI.HEADERINFO: TypeNamePlural is mandatory"/>
+                                <PropertyValue Property="severity" String="error"/>
+                            </Record>
+                        </Collection>
+                    </Annotation>
+                    <Record>
+                        <PropertyValue Property="TypeName" String="LL COLOR CDS VIEW"/>
+                        <PropertyValue Property="Description">
+                            <Record Type="SAP__UI.DataField"/>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/Criticality">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/DraftEntityType">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="草稿实体标识"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/CreatedByUser">
+                <Annotation Term="SAP__common.Text" Path="CreatedByUserDescription"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/i_draftadministrativeuservh/0001;ps='srvd-zll_ui_test1-0001';va='com.sap.gateway.srvd.zll_ui_test1.v0001.et-i_draftadministrativedata.createdbyuser'/$metadata</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.Label" String="草稿创建人"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/LastChangedByUser">
+                <Annotation Term="SAP__common.Text" Path="LastChangedByUserDescription"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/i_draftadministrativeuservh/0001;ps='srvd-zll_ui_test1-0001';va='com.sap.gateway.srvd.zll_ui_test1.v0001.et-i_draftadministrativedata.lastchangedbyuser'/$metadata</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.Label" String="草稿上次更改人"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/DraftAccessType">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="草稿访问类型"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/InProcessByUser">
+                <Annotation Term="SAP__common.Text" Path="InProcessByUserDescription"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="正在处理草稿的用户"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType">
+                <Annotation Term="SAP__common.Label" String="草稿管理数据"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/I_DraftAdministrativeData">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="true"/>
+                        <PropertyValue Property="UnsupportedExpressions" EnumMember="SAP__capabilities.SearchExpressions/AND SAP__capabilities.SearchExpressions/NOT SAP__capabilities.SearchExpressions/group "/>
+                        <PropertyValue Property="SearchSyntax" String="https://url.sap/odata-search"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="Filterable" Bool="true"/>
+                        <PropertyValue Property="FilterExpressionRestrictions">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="CreationDateTime"/>
+                                    <PropertyValue Property="AllowedExpressions" String="SingleRange"/>
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="LastChangeDateTime"/>
+                                    <PropertyValue Property="AllowedExpressions" String="SingleRange"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.ReadRestrictions">
+                    <Record>
+                        <PropertyValue Property="Readable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/GroupId">
+                <Annotation Term="SAP__common.Label" String="그룹 아이디"/>
+                <Annotation Term="SAP__core.Immutable"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/Attachment">
+                <Annotation Term="SAP__core.ContentDisposition">
+                    <Record>
+                        <PropertyValue Property="Filename" Path="Filename"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.MediaType" Path="Mimetype"/>
+                <Annotation Term="SAP__core.AcceptableMediaTypes">
+                    <Collection>
+                        <String>image/png</String>
+                        <String>image/jpeg</String>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/ImgSrc">
+                <Annotation Term="SAP__core.ContentDisposition">
+                    <Record>
+                        <PropertyValue Property="Filename" Path="Filename"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__core.MediaType" Path="Mimetype"/>
+                <Annotation Term="SAP__core.AcceptableMediaTypes">
+                    <Collection>
+                        <String>image/png</String>
+                        <String>image/jpeg</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.IsImageURL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/NavigationID">
+                <Annotation Term="SAP__common.Label" String="Search Navigation"/>
+                <Annotation Term="SAP__common.QuickInfo" String="QuickView"/>
+                <Annotation Term="SAP__common.Text" Path="_Navigation/Name">
+                    <Annotation Term="SAP__UI.TextArrangement" EnumMember="SAP__UI.TextArrangementType/TextOnly"/>
+                </Annotation>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zll_i_nav/0001;ps='srvd-zll_ui_test1-0001';va='com.sap.gateway.srvd.zll_ui_test1.v0001.et-zll_c_test1.navigationid'/$metadata</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
+                <Annotation Term="SAP__common.SemanticObject" String="Infomation"/>
+                <Annotation Term="SAP__common.SemanticObjectMapping">
+                    <Collection>
+                        <Record>
+                            <PropertyValue Property="LocalProperty" PropertyPath="NavigationID"/>
+                            <PropertyValue Property="SemanticObjectProperty" String="ID"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.Heading" String="UUID"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/ChartColor">
+                <Annotation Term="SAP__common.Text" Path="_Criticality/Name">
+                    <Annotation Term="SAP__UI.TextArrangement" EnumMember="SAP__UI.TextArrangementType/TextFirst"/>
+                </Annotation>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zll_i_color/0001;ps='srvd-zll_ui_test1-0001';va='com.sap.gateway.srvd.zll_ui_test1.v0001.et-zll_c_test1.chartcolor'/$metadata</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/ColorTxt">
+                <Annotation Term="SAP__common.Label" String="中文"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type">
+                <Annotation Term="SAP__common.CreatedAt" Path="CreateDate"/>
+                <Annotation Term="SAP__common.CreatedBy" Path="CreateBy"/>
+                <Annotation Term="SAP__common.ChangedAt" Path="LastChangedAt"/>
+                <Annotation Term="SAP__common.Label" String="ZLL_C_TEST1"/>
+                <Annotation Term="SAP__common.SemanticKey">
+                    <Collection>
+                        <PropertyPath>GroupId</PropertyPath>
+                        <PropertyPath>NavigationID</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.SideEffects" Qualifier="SAP__Field_NavigationID">
+                    <Record Type="SAP__common.SideEffectsType">
+                        <PropertyValue Property="SourceProperties">
+                            <Collection>
+                                <PropertyPath>NavigationID</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="TargetEntities">
+                            <Collection>
+                                <NavigationPropertyPath>_Navigation</NavigationPropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.Chart" Qualifier="rateChart">
+                    <Record Type="SAP__UI.ChartDefinitionType">
+                        <PropertyValue Property="Title" String="비율 도표"/>
+                        <PropertyValue Property="ChartType" EnumMember="SAP__UI.ChartType/Donut"/>
+                        <PropertyValue Property="Measures">
+                            <Collection>
+                                <PropertyPath>PieValue2</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="MeasureAttributes">
+                            <Collection>
+                                <Record Type="SAP__UI.ChartMeasureAttributeType">
+                                    <PropertyValue Property="Measure" PropertyPath="PieValue2"/>
+                                    <PropertyValue Property="Role" EnumMember="SAP__UI.ChartMeasureRoleType/Axis1"/>
+                                    <PropertyValue Property="DataPoint" AnnotationPath="@SAP__UI.DataPoint#PieValue2"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.Chart" Qualifier="pieChart">
+                    <Record Type="SAP__UI.ChartDefinitionType">
+                        <PropertyValue Property="Title" String="Pie Chart"/>
+                        <PropertyValue Property="Description" String="타이틀 하단 내역"/>
+                        <PropertyValue Property="ChartType" EnumMember="SAP__UI.ChartType/Pie"/>
+                        <PropertyValue Property="Measures">
+                            <Collection>
+                                <PropertyPath>PieValue</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="MeasureAttributes">
+                            <Collection>
+                                <Record Type="SAP__UI.ChartMeasureAttributeType">
+                                    <PropertyValue Property="Measure" PropertyPath="PieValue"/>
+                                    <PropertyValue Property="Role" EnumMember="SAP__UI.ChartMeasureRoleType/Axis1"/>
+                                    <PropertyValue Property="DataPoint" AnnotationPath="@SAP__UI.DataPoint#PieValue"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.DataPoint" Qualifier="PieValue">
+                    <Record>
+                        <PropertyValue Property="Value" Path="PieValue"/>
+                        <PropertyValue Property="Title" String=""/>
+                        <PropertyValue Property="MaximumValue" Decimal="300"/>
+                        <PropertyValue Property="ValueFormat">
+                            <Record>
+                                <PropertyValue Property="NumberOfFractionalDigits" Int="2"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Criticality" Path="ChartColor"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.DataPoint" Qualifier="PieValue2">
+                    <Record>
+                        <PropertyValue Property="Value" Path="PieValue2"/>
+                        <PropertyValue Property="Title" String=""/>
+                        <PropertyValue Property="TargetValue" Path="TargetValue"/>
+                        <PropertyValue Property="ValueFormat">
+                            <Record>
+                                <PropertyValue Property="NumberOfFractionalDigits" Int="1"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Criticality" Path="ChartColor"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.DataPoint" Qualifier="ProgressValue">
+                    <Record>
+                        <PropertyValue Property="Value" Path="ProgressValue"/>
+                        <PropertyValue Property="Title" String="진도 도표"/>
+                        <PropertyValue Property="Description" String="설명 텍스트를 길게 써도 됩니다."/>
+                        <PropertyValue Property="TargetValue" Path="TargetValue"/>
+                        <PropertyValue Property="Visualization" EnumMember="SAP__UI.VisualizationType/Progress"/>
+                        <PropertyValue Property="Criticality" Path="ChartColor"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.DataPoint" Qualifier="Stars">
+                    <Record>
+                        <PropertyValue Property="Value" Path="Stars"/>
+                        <PropertyValue Property="Title" String="별표"/>
+                        <PropertyValue Property="TargetValue" Decimal="6"/>
+                        <PropertyValue Property="Visualization" EnumMember="SAP__UI.VisualizationType/Rating"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="SAP__UI.CollectionFacet">
+                            <PropertyValue Property="ID" String="Header"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="SAP__UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="헤더 정보"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@SAP__UI.FieldGroup#HeaderData"/>
+                                    </Record>
+                                    <Record Type="SAP__UI.ReferenceFacet">
+                                        <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Stars"/>
+                                    </Record>
+                                    <Record Type="SAP__UI.ReferenceFacet">
+                                        <PropertyValue Property="Target" AnnotationPath="@SAP__UI.Chart#pieChart"/>
+                                    </Record>
+                                    <Record Type="SAP__UI.ReferenceFacet">
+                                        <PropertyValue Property="Target" AnnotationPath="@SAP__UI.Chart#rateChart"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record Type="SAP__UI.CollectionFacet">
+                            <PropertyValue Property="ID" String="Header2"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="SAP__UI.ReferenceFacet">
+                                        <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#ProgressValue"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record Type="SAP__UI.CollectionFacet">
+                            <PropertyValue Property="ID" String="Header3"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="SAP__UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="액션 관련 필드 그룹"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@SAP__UI.FieldGroup#Quick"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.Facets">
+                    <Collection>
+                        <Record Type="SAP__UI.CollectionFacet">
+                            <PropertyValue Property="Label" String="첫번째 탭"/>
+                            <PropertyValue Property="ID" String="FirstTab"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="SAP__UI.CollectionFacet">
+                                        <PropertyValue Property="Label" String="자매 탭1"/>
+                                        <PropertyValue Property="ID" String="SonTab1"/>
+                                        <PropertyValue Property="Facets">
+                                            <Collection>
+                                                <Record Type="SAP__UI.ReferenceFacet">
+                                                    <PropertyValue Property="Label" String="FirstGroup"/>
+                                                    <PropertyValue Property="Target" AnnotationPath="@SAP__UI.FieldGroup#FGGroup"/>
+                                                    <Annotation Term="SAP__UI.PartOfPreview" Bool="false"/>
+                                                </Record>
+                                            </Collection>
+                                        </PropertyValue>
+                                    </Record>
+                                    <Record Type="SAP__UI.CollectionFacet">
+                                        <PropertyValue Property="Label" String="자매 탭2"/>
+                                        <PropertyValue Property="ID" String="SonTab2"/>
+                                        <PropertyValue Property="Facets">
+                                            <Collection>
+                                                <Record Type="SAP__UI.ReferenceFacet">
+                                                    <PropertyValue Property="Label" String="FirstGroup"/>
+                                                    <PropertyValue Property="Target" AnnotationPath="@SAP__UI.FieldGroup#FGFile"/>
+                                                </Record>
+                                                <Record Type="SAP__UI.ReferenceFacet">
+                                                    <PropertyValue Property="Label" String="평점"/>
+                                                    <PropertyValue Property="Target" AnnotationPath="@SAP__UI.FieldGroup#FGStar"/>
+                                                </Record>
+                                            </Collection>
+                                        </PropertyValue>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Second Tab"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.FieldGroup#FGUrl"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="네비게이션 탭"/>
+                            <PropertyValue Property="Target" AnnotationPath="_Navigation/@SAP__UI.FieldGroup#data"/>
+                        </Record>
+                        <Record Type="SAP__UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="단일 도표 관련 데이터"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.FieldGroup#FGChart"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.FieldGroup" Qualifier="FGChart">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="SAP__UI.DataFieldForAnnotation">
+                                    <PropertyValue Property="Label" String="별 평점 수정"/>
+                                    <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Stars"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="Pie Value"/>
+                                    <PropertyValue Property="Value" Path="PieValue"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="PieValue2"/>
+                                    <PropertyValue Property="Value" Path="PieValue2"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="진도 도표"/>
+                                    <PropertyValue Property="Value" Path="ProgressValue"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="Target Value"/>
+                                    <PropertyValue Property="Value" Path="TargetValue"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.FieldGroup" Qualifier="FGFile">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="이미지 미리보기"/>
+                                    <PropertyValue Property="Value" Path="ImgSrc"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="이미지 수정"/>
+                                    <PropertyValue Property="Value" Path="Attachment"/>
+                                    <Annotation Term="SAP__UI.Hidden" Path="IsActiveEntity"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.FieldGroup" Qualifier="FGGroup">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="첫번째 탭 그룹"/>
+                                    <PropertyValue Property="Value" Path="GroupId"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="Color"/>
+                                    <PropertyValue Property="Value" Path="ChartColor"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="TEXT"/>
+                                    <PropertyValue Property="Value" Path="ColorTxt"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.FieldGroup" Qualifier="FGStar">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="SAP__UI.DataFieldWithIntentBasedNavigation">
+                                    <PropertyValue Property="Label" String="Navigation"/>
+                                    <PropertyValue Property="SemanticObject" String="Infomation"/>
+                                    <PropertyValue Property="Action" String="manage"/>
+                                    <PropertyValue Property="Value" Path="NavigationID"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.FieldGroup" Qualifier="FGUrl">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="SAP__UI.DataFieldForAction">
+                                    <PropertyValue Property="Label" String="탭 버튼"/>
+                                    <PropertyValue Property="Action" String="com.sap.gateway.srvd.zll_ui_test1.v0001.TabButton(com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type)"/>
+                                    <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                                    <Annotation Term="SAP__UI.Emphasized"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataFieldWithUrl">
+                                    <PropertyValue Property="Label" String="URL 이름"/>
+                                    <PropertyValue Property="Value" Path="UrlText"/>
+                                    <PropertyValue Property="Url" Path="Url"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="URL 주소"/>
+                                    <PropertyValue Property="Value" Path="Url"/>
+                                    <Annotation Term="SAP__UI.PartOfPreview" Bool="false"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.FieldGroup" Qualifier="HeaderData">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="상단 노출 부분"/>
+                                    <PropertyValue Property="Value" Path="GroupId"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.FieldGroup" Qualifier="LineData">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="LocalLastChangedAt"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="LocalLastChangedBy"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="CreateBy"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Value" Path="CreateDate"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.FieldGroup" Qualifier="Quick">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="상단 네비게이션"/>
+                                    <PropertyValue Property="Value" Path="NavigationID"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataFieldWithAction">
+                                    <PropertyValue Property="Label" String="색상 변경 버튼"/>
+                                    <PropertyValue Property="Criticality" Path="ChartColor"/>
+                                    <PropertyValue Property="Action" String="com.sap.gateway.srvd.zll_ui_test1.v0001.changeColor(com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type)"/>
+                                    <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                                    <PropertyValue Property="Value" Path="ChartColor"/>
+                                </Record>
+                                <Record Type="SAP__UI.DataField">
+                                    <PropertyValue Property="Label" String="Color Quick View"/>
+                                    <PropertyValue Property="Criticality" Path="ChartColor"/>
+                                    <PropertyValue Property="Value" Path="ChartColor"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.HeaderInfo">
+                    <Record>
+                        <PropertyValue Property="TypeName" String="Test1"/>
+                        <PropertyValue Property="TypeNamePlural" String="List"/>
+                        <PropertyValue Property="TypeImageUrl" String="sap-icon://sales-order"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="GroupId"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Label" String="Detail"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="ImageUrl" Path="Attachment"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.Identification">
+                    <Collection>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Criticality" Path="ChartColor"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zll_ui_test1.v0001.copyInstance(com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                            <Annotation Term="SAP__UI.IsCopyAction" Bool="true"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.LineItem">
+                    <Annotation Term="SAP__UI.Criticality" Path="ChartColor"/>
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="이미지"/>
+                            <PropertyValue Property="Value" Path="ImgSrc"/>
+                            <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="그룹 아이디"/>
+                            <PropertyValue Property="Value" Path="GroupId"/>
+                            <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/High"/>
+                            <Annotation Term="SAP__HTML5.CssDefaults">
+                                <Record>
+                                    <PropertyValue Property="width" String="10em"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldWithUrl">
+                            <PropertyValue Property="Label" String="URL"/>
+                            <PropertyValue Property="Value" Path="UrlText"/>
+                            <PropertyValue Property="Url" Path="Url"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="NavigationID"/>
+                            <PropertyValue Property="Value" Path="NavigationID"/>
+                            <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/High"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Label" String="리스트 버튼"/>
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zll_ui_test1.v0001.ListButton(com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                            <PropertyValue Property="Inline" Bool="true"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Label" String="Last Changed At"/>
+                            <PropertyValue Property="Criticality" Path="ChartColor"/>
+                            <PropertyValue Property="Value" Path="LastChangedAt"/>
+                            <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Low"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAnnotation">
+                            <PropertyValue Property="Label" String="Create By"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.FieldGroup#LineData"/>
+                            <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Low"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAnnotation">
+                            <PropertyValue Property="Label" String="별 평점"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#Stars"/>
+                            <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Low"/>
+                            <Annotation Term="SAP__HTML5.CssDefaults">
+                                <Record>
+                                    <PropertyValue Property="width" String="12em"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAnnotation">
+                            <PropertyValue Property="Label" String="Pie Chart"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.Chart#pieChart"/>
+                            <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Low"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAnnotation">
+                            <PropertyValue Property="Label" String="비율 표"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.Chart#rateChart"/>
+                            <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Low"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAnnotation">
+                            <PropertyValue Property="Label" String="진도 도표"/>
+                            <PropertyValue Property="Target" AnnotationPath="@SAP__UI.DataPoint#ProgressValue"/>
+                            <Annotation Term="SAP__UI.Importance" EnumMember="SAP__UI.ImportanceType/Low"/>
+                            <Annotation Term="SAP__HTML5.CssDefaults">
+                                <Record>
+                                    <PropertyValue Property="width" String="10em"/>
+                                </Record>
+                            </Annotation>
+                        </Record>
+                        <Record Type="SAP__UI.DataFieldForAction">
+                            <PropertyValue Property="Action" String="com.sap.gateway.srvd.zll_ui_test1.v0001.copyInstance(com.sap.gateway.srvd.zll_ui_test1.v0001.ZLL_C_TEST1Type)"/>
+                            <PropertyValue Property="InvocationGrouping" EnumMember="SAP__UI.OperationGroupingType/Isolated"/>
+                            <Annotation Term="SAP__UI.IsCopyAction" Bool="true"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.PresentationVariant" Qualifier="pvariant">
+                    <Record>
+                        <PropertyValue Property="MaxItems" Int="2"/>
+                        <PropertyValue Property="SortOrder">
+                            <Collection>
+                                <Record Type="SAP__common.SortOrderType">
+                                    <PropertyValue Property="Property" PropertyPath="GroupId"/>
+                                    <PropertyValue Property="Descending" Bool="true"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Visualizations">
+                            <Collection>
+                                <AnnotationPath>@SAP__UI.LineItem</AnnotationPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>ChartColor</PropertyPath>
+                        <PropertyPath>UrlText</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.SelectionPresentationVariant">
+                    <Record>
+                        <PropertyValue Property="Text" String="Default Select Value"/>
+                        <PropertyValue Property="SelectionVariant" Path="@SAP__UI.SelectionVariant#svariant"/>
+                        <PropertyValue Property="PresentationVariant" Path="@SAP__UI.PresentationVariant#pvariant"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.SelectionVariant" Qualifier="svariant">
+                    <Record>
+                        <PropertyValue Property="Text" String="GroupId Select"/>
+                        <PropertyValue Property="SelectOptions">
+                            <Collection>
+                                <Record Type="SAP__UI.SelectOptionType">
+                                    <PropertyValue Property="PropertyName" PropertyPath="ChartColor"/>
+                                    <PropertyValue Property="Ranges">
+                                        <Collection>
+                                            <Record Type="SAP__UI.SelectionRangeType">
+                                                <PropertyValue Property="Sign" EnumMember="SAP__UI.SelectionRangeSignType/I"/>
+                                                <PropertyValue Property="Option" EnumMember="SAP__UI.SelectionRangeOptionType/BT"/>
+                                                <PropertyValue Property="Low" Int="1"/>
+                                                <PropertyValue Property="High" Int="2"/>
+                                            </Record>
+                                        </Collection>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__common.Messages" Path="SAP__Messages"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/CreateBy">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="创建人"/>
+                <Annotation Term="SAP__common.QuickInfo" String="创建人用户"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_CREATION_USER"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/LocalLastChangedBy">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="更改人"/>
+                <Annotation Term="SAP__common.QuickInfo" String="本地实例最后更改用户"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LOCINST_LASTCHANGE_USER"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/HasDraftEntity">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="有草稿"/>
+                <Annotation Term="SAP__common.QuickInfo" String="草稿 - 指示器 - 具有草稿文档"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/DraftEntityCreationDateTime">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="草稿创建日期"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/DraftEntityLastChangeDateTime">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="草稿上次更改日期"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/HasActiveEntity">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="具有活动文档"/>
+                <Annotation Term="SAP__common.Heading" String="有活动文档"/>
+                <Annotation Term="SAP__common.QuickInfo" String="草稿 - 指示器 - 具有活动文档"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/IsActiveEntity">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="处于活动状态"/>
+                <Annotation Term="SAP__common.Heading" String="是活动文档"/>
+                <Annotation Term="SAP__common.QuickInfo" String="草稿 - 指示器 - 是活动文档"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/__EntityControl">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/__OperationControl">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/ZLL_C_TEST1">
+                <Annotation Term="SAP__capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_Criticality"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_Navigation"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__common.DraftRoot">
+                    <Record>
+                        <PropertyValue Property="PreparationAction" String="com.sap.gateway.srvd.zll_ui_test1.v0001.Prepare"/>
+                        <PropertyValue Property="ActivationAction" String="com.sap.gateway.srvd.zll_ui_test1.v0001.Activate"/>
+                        <PropertyValue Property="EditAction" String="com.sap.gateway.srvd.zll_ui_test1.v0001.Edit"/>
+                        <PropertyValue Property="AdditionalNewActions">
+                            <Collection>
+                                <String>com.sap.gateway.srvd.zll_ui_test1.v0001.copyInstance</String>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="DiscardAction" String="com.sap.gateway.srvd.zll_ui_test1.v0001.Discard"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="true"/>
+                        <PropertyValue Property="UnsupportedExpressions" EnumMember="SAP__capabilities.SearchExpressions/AND SAP__capabilities.SearchExpressions/NOT SAP__capabilities.SearchExpressions/group "/>
+                        <PropertyValue Property="SearchSyntax" String="https://url.sap/odata-search"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="Filterable" Bool="true"/>
+                        <PropertyValue Property="FilterExpressionRestrictions">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="DraftEntityCreationDateTime"/>
+                                    <PropertyValue Property="AllowedExpressions" String="SingleRange"/>
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="DraftEntityLastChangeDateTime"/>
+                                    <PropertyValue Property="AllowedExpressions" String="SingleRange"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>__EntityControl</PropertyPath>
+                                <PropertyPath>__OperationControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>__EntityControl</PropertyPath>
+                                <PropertyPath>__OperationControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="DeltaUpdateSupported" Bool="true"/>
+                        <PropertyValue Property="NonUpdatableProperties">
+                            <Collection>
+                                <PropertyPath>GroupId</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="Updatable" Path="__EntityControl/Updatable"/>
+                        <PropertyValue Property="NonUpdatableNavigationProperties">
+                            <Collection>
+                                <PropertyPath>DraftAdministrativeData</PropertyPath>
+                                <PropertyPath>SiblingEntity</PropertyPath>
+                                <PropertyPath>_Criticality</PropertyPath>
+                                <PropertyPath>_Navigation</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeepUpdateSupport">
+                    <Record>
+                        <PropertyValue Property="ContentIDSupported" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Path="__EntityControl/Deletable"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__common.DefaultValuesFunction" String="com.sap.gateway.srvd.zll_ui_test1.v0001.GetDefaultsForCreate"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Edit(SAP__self.ZLL_C_TEST1Type)/PreserveChanges">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="正确"/>
+                <Annotation Term="SAP__common.QuickInfo" String="域BOOLE的数据要素: 真 (='X')， 假 (=' ')"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Edit(SAP__self.ZLL_C_TEST1Type)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/Edit"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ListButton(SAP__self.ZLL_C_TEST1Type)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/ListButton"/>
+            </Annotations>
+            <Annotations Target="SAP__self.copyInstance(SAP__self.ZLL_C_TEST1Type)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/copyInstance"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TabButton(SAP__self.ZLL_C_TEST1Type)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/TabButton"/>
+            </Annotations>
+            <Annotations Target="SAP__self.changeColor(SAP__self.ZLL_C_TEST1Type)">
+                <Annotation Term="SAP__core.OperationAvailable" Path="_it/__OperationControl/changeColor"/>
+            </Annotations>
+            <Annotations Target="SAP__self.changeColor(SAP__self.ZLL_C_TEST1Type)/color_code">
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zll_i_color/0001;ps='srvd-zll_ui_test1-0001';va='com.sap.gateway.srvd.zll_ui_test1.v0001.ae-zll_c_test1.changecolor.color_code.ZLL_C_TEST1Type'/$metadata</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.ValueListWithFixedValues"/>
+                <Annotation Term="SAP__UI.ParameterDefaultValue" Path="_it/ChartColor"/>
+                <Annotation Term="SAP__common.Label" String="Criticality Code"/>
+                <Annotation Term="SAP__common.Heading" String="Criticality Code (#LocalizedEndUserText)"/>
+                <Annotation Term="SAP__common.QuickInfo" String="criticality code"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container">
+                <Annotation Term="SAP__common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+                <Annotation Term="SAP__UI.LeadingEntitySet" String="ZLL_C_TEST1"/>
+                <Annotation Term="SAP__capabilities.FilterFunctions">
+                    <Collection>
+                        <String>eq</String>
+                        <String>ne</String>
+                        <String>gt</String>
+                        <String>ge</String>
+                        <String>lt</String>
+                        <String>le</String>
+                        <String>and</String>
+                        <String>or</String>
+                        <String>contains</String>
+                        <String>startswith</String>
+                        <String>endswith</String>
+                        <String>any</String>
+                        <String>all</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SupportedFormats">
+                    <Collection>
+                        <String>application/json</String>
+                        <String>application/pdf</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__PDF.Features">
+                    <Record>
+                        <PropertyValue Property="DocumentDescriptionReference" String="../../../../default/iwbep/common/0001/$metadata"/>
+                        <PropertyValue Property="DocumentDescriptionCollection" String="MyDocumentDescriptions"/>
+                        <PropertyValue Property="ArchiveFormat" Bool="true"/>
+                        <PropertyValue Property="Border" Bool="true"/>
+                        <PropertyValue Property="CoverPage" Bool="true"/>
+                        <PropertyValue Property="FitToPage" Bool="true"/>
+                        <PropertyValue Property="FontName" Bool="true"/>
+                        <PropertyValue Property="FontSize" Bool="true"/>
+                        <PropertyValue Property="HeaderFooter" Bool="true"/>
+                        <PropertyValue Property="IANATimezoneFormat" Bool="true"/>
+                        <PropertyValue Property="Margin" Bool="true"/>
+                        <PropertyValue Property="Padding" Bool="true"/>
+                        <PropertyValue Property="ResultSizeDefault" Int="20000"/>
+                        <PropertyValue Property="ResultSizeMaximum" Int="20000"/>
+                        <PropertyValue Property="Signature" Bool="true"/>
+                        <PropertyValue Property="TextDirectionLayout" Bool="true"/>
+                        <PropertyValue Property="Treeview" Bool="true"/>
+                        <PropertyValue Property="UploadToFileShare" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
+                <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/DraftUUID">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="草稿（技术标识）"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/ProcessingStartDateTime">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="草稿处理中状态自"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/DraftIsKeptByUser">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="已由用户保留"/>
+                <Annotation Term="SAP__common.Heading" String="已由用户保留草稿"/>
+                <Annotation Term="SAP__common.QuickInfo" String="已由用户保留草稿"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/EnqueueStartDateTime">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="草稿锁定自"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/DraftIsCreatedByMe">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="由我创建草稿"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/DraftIsLastChangedByMe">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="由我最后更改草稿"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/DraftIsProcessedByMe">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="正在由我处理草稿"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/CreatedByUserDescription">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="草稿创建人（描述）"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/LastChangedByUserDescription">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="草稿最后更改人（描述）"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/InProcessByUserDescription">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="草稿处理人（描述）"/>
+            </Annotations>
+            <Annotations Target="SAP__self.NavigationType/LocalLastChangedAt">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="更改日期"/>
+                <Annotation Term="SAP__common.QuickInfo" String="本地实例最后更改日期时间"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LOCINST_LASTCHANGE_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.NavigationType/LastChangedAt">
+                <Annotation Term="SAP__UI.Hidden"/>
+                <Annotation Term="SAP__common.Label" String="更改日期"/>
+                <Annotation Term="SAP__common.QuickInfo" String="最后更改日期时间"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LASTCHANGE_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/CreationDateTime">
+                <Annotation Term="SAP__common.Label" String="草稿创建日期"/>
+            </Annotations>
+            <Annotations Target="SAP__self.I_DraftAdministrativeDataType/LastChangeDateTime">
+                <Annotation Term="SAP__common.Label" String="草稿上次更改日期"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/CreateDate">
+                <Annotation Term="SAP__common.Label" String="创建日期"/>
+                <Annotation Term="SAP__common.QuickInfo" String="创建日期时间"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_CREATION_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/LocalLastChangedAt">
+                <Annotation Term="SAP__common.Label" String="更改日期"/>
+                <Annotation Term="SAP__common.QuickInfo" String="本地实例最后更改日期时间"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LOCINST_LASTCHANGE_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1Type/LastChangedAt">
+                <Annotation Term="SAP__common.Label" String="更改日期"/>
+                <Annotation Term="SAP__common.QuickInfo" String="最后更改日期时间"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LASTCHANGE_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1OperationControl/changeColor">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1OperationControl/copyInstance">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1OperationControl/Edit">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1OperationControl/ListButton">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1OperationControl/TabButton">
+                <Annotation Term="SAP__common.Label" String="Dyn. Action Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Action Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Action Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/CreateDate">
+                <Annotation Term="SAP__common.Label" String="创建日期"/>
+                <Annotation Term="SAP__common.QuickInfo" String="创建日期时间"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_CREATION_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/DraftEntityCreationDateTime">
+                <Annotation Term="SAP__common.Label" String="草稿创建日期"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/DraftEntityLastChangeDateTime">
+                <Annotation Term="SAP__common.Label" String="草稿上次更改日期"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/LastChangedAt">
+                <Annotation Term="SAP__common.Label" String="更改日期"/>
+                <Annotation Term="SAP__common.QuickInfo" String="最后更改日期时间"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LASTCHANGE_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.ZLL_C_TEST1/LocalLastChangedAt">
+                <Annotation Term="SAP__common.Label" String="更改日期"/>
+                <Annotation Term="SAP__common.QuickInfo" String="本地实例最后更改日期时间"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LOCINST_LASTCHANGE_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.EntityControl/Deletable">
+                <Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.EntityControl/Updatable">
+                <Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.copyInstance(SAP__self.ZLL_C_TEST1Type)/ResultIsActiveEntity">
+                <Annotation Term="SAP__common.Label" String="结果是活动"/>
+                <Annotation Term="SAP__common.QuickInfo" String="草稿 - 指示器 - 是活动文档"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
