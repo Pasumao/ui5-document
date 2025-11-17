@@ -13,9 +13,12 @@
 - [field(mandatory)](#fieldmandatory)
 - [field(features:instance)](#fieldfeaturesinstance)
 - [field(mandatory:create)](#fieldmandatorycreate)
+- [function](#function)
+    - [default function GetDefaultsForChild;](#default-function-getdefaultsforchild)
 - [action](#action)
     - [static action](#static-action)
     - [Factory Action](#factory-action)
+- [action and function](#action-and-function)
 - [side effects](#side-effects)
 - [validation](#validation)
 - [determination](#determination)
@@ -186,8 +189,67 @@ classes
 > 运行顺序从左到右
 > get_global_authorizations  get_global_features  get_instance_authorizations  get_instance_features
 
-## precheck
+## precheck 
+> precheck （预校验） 预检查用于在数据到达事务缓冲区之前对其进行验证。这可确保及早捕获无效数据，防止在草稿表或事务缓冲区中进行不必要的存储。
+> 防止无效数据保存在草稿表或事务缓冲区中，尤其是在启用草稿的应用程序中
+> 
 
+behavior
+```
+  update ( precheck );
+```
+
+classes
+> 以下代码功能 在更新时预检查字段 Age 是否符合年龄要求
+```
+METHOD precheck_update.
+
+  LOOP AT entities ASSIGNING FIELD-SYMBOL(<lfs_entity>).
+
+    "检查用户是否更改了字段Age
+    CHECK <lfs_entity>-%control-Age = 01.
+
+    READ ENTITIES OF ycx_test001_data IN LOCAL MODE
+    ENTITY ycx_test001_data
+    FIELDS ( Age )
+    WITH VALUE #( ( %key = <lfs_entity>-%key  ) )
+    RESULT DATA(lt_peopleAge).
+
+    IF sy-subrc IS INITIAL.
+      READ TABLE lt_peopleAge ASSIGNING FIELD-SYMBOL(<lfs_db_age>) INDEX 1.
+      IF sy-subrc IS INITIAL.
+        <lfs_db_age>-Age = <lfs_entity>-Age.
+      ENDIF.
+
+      IF <lfs_db_age>-Age >= 18 AND <lfs_db_age>-Age <= 24.
+            APPEND VALUE #(  %tky =  <lfs_entity>-%tky
+                              %msg = new_message_with_text(
+                                severity = if_abap_behv_message=>severity-success
+                                text = '18岁到24为实习生'
+                              )  ) TO reported-ycx_test001_data.
+      ELSEIF <lfs_db_age>-Age >= 25 AND <lfs_db_age>-Age <= 35.
+            APPEND VALUE #(  %tky =  <lfs_entity>-%tky
+                              %msg = new_message_with_text(
+                                severity = if_abap_behv_message=>severity-success
+                                text = '25岁到35为正式员工'
+                              )  ) TO reported-ycx_test001_data.
+      ELSE.
+            APPEND VALUE #(  %tky =  <lfs_entity>-%tky ) TO failed-ycx_test001_data.
+            APPEND VALUE #(  %tky =  <lfs_entity>-%tky
+                              %msg = new_message_with_text(
+                                severity = if_abap_behv_message=>severity-error
+                                text = '年龄不合要求 要18到35岁'
+                              )  ) TO reported-ycx_test001_data.
+
+      ENDIF.
+    ENDIF.
+
+  ENDLOOP.
+
+ENDMETHOD.
+```
+
+![alt text](../GIF/precheck.gif)
 
 
 ## field
@@ -276,7 +338,67 @@ field (mandatory : create) BValue;
 ```
 ![alt text](<../PNG/mandatory create.png>)
 
+## function
+> RAP 函数是一种用户实现的操作，它返回信息且没有副作用。函数对业务对象执行计算或读取操作，而不发出锁或修改数据。需要在 ABAP 行为池中的 RAP 处理器方法 FOR READ ... FUNCTION 中提供实现。
+>
+> 注意：函数绝不能修改任何数据。在 ABAP 行为池的实现中，MODIFY ENTITIES 操作是无效的。如果 RAP BO 使用者尝试访问相关函数，在函数实现中使用 MODIFY ENTITIES 语句将导致运行时错误。
 
+#### default function GetDefaultsForChild;
+
+behavior
+```
+define behavior for YCX_R_GROUP //alias <alias_name>
+...
+{
+  ...
+  association _Members { create{default function GetDefaultsForChild;} with draft; }
+  ...
+}
+
+define behavior for YCX_R_MEMBER //alias <alias_name>
+persistent table ycxmember
+draft table ycxmember_d
+lock dependent by _Group
+authorization dependent by _Group
+etag master CreDate
+{
+  update;
+  delete;
+
+  field ( readonly:update )GroupId;  //这边为了显示 GroupId输入框 使用了 readonly:update
+
+  field ( mandatory : create ) MemberId,MemberName;
+  field (readonly : update)ParentMenuId;
+  field(readonly : update)MenuSeq;
+
+  association _Group{with draft;}
+  association _Member
+  {
+    with draft;
+    link action linkParentMenu;
+    unlink action unlinkParentMenu;
+
+  }
+
+  association _ChildMember { with draft;}
+
+  ...
+
+}
+```
+
+classes
+> GroupId输入框显示值
+```
+METHOD GetDefaultsForChild.
+      result = VALUE #( FOR key IN keys
+          ( %tky    = key-%tky
+            %param  = VALUE #( GroupId = key-GroupId
+                              ) ) ).
+
+ENDMETHOD.
+```
+![alt text](<../PNG/default function.png>)
 
 ## action
 > 如果要一次创建操作多条数据，就得用上action，或者创建前的各种逻辑校验，如果需要返回值的时候也会需要action
@@ -292,7 +414,7 @@ YCX_D_ActionParam_Test_0001
 @EndUserText.label: 'YCX_D_ActionParam_Test_0001'
 define abstract entity YCX_D_ActionParam_Test_0001
 {
-    @UI.defaultValue: #( 'ELEMENT_OF_REFERENCED_ENTITY: AValue' )
+    @UI.defaultValue: #( 'ELEMENT_OF_REFERENCED_ENTITY: AValue' )    //@UI.defaultValue添加默认值
     a_value: abap.char( 256 );
     @UI.defaultValue: #( 'ELEMENT_OF_REFERENCED_ENTITY: BValue' )
     b_value: abap.char( 256 );
@@ -432,6 +554,12 @@ ENDMETHOD.
 ```
 ![alt text](<../GIF/Factory Action.gif>)
 
+## action and function
+> 如果需要改变业务对象的状态或持久化数据，使用action；如果只是查询或计算，使用function。
+> 
+> function = 只读 + 无副作用    function可重复使用
+> 
+> action = 可写 + 可以有副作用
 
 ## side effects
 [side effects](<../side effects.md>)
