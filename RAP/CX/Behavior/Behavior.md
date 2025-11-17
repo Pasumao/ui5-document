@@ -1,5 +1,14 @@
 ## **目录**
 - [**目录**](#目录)
+- [draft table](#draft-table)
+- [authorization （授权）](#authorization-授权)
+    - [authorization : global （全局授权）](#authorization--global-全局授权)
+    - [authorization : instance](#authorization--instance)
+- [features](#features)
+    - [features : instance](#features--instance)
+    - [features : global](#features--global)
+- [执行顺序](#执行顺序)
+- [precheck](#precheck)
 - [field](#field)
 - [field(mandatory)](#fieldmandatory)
 - [field(features:instance)](#fieldfeaturesinstance)
@@ -12,6 +21,173 @@
 - [determination](#determination)
 - [default function GetDefaultsFor](#default-function-getdefaultsfor)
 - [例](#例)
+
+
+## draft table
+>  RAP ABAP 中的草稿表允许您在事务处理期间临时保存不完整或中间的用户输入。此草稿数据与最终的持久业务数据分开存储，确保用户可以逐步处理其更改，而无需立即将其提交到数据库中。用户可以稍后检索、修改和完成草稿。
+
+## authorization （授权）
+> global :对整个 RAP BO 的数据访问权限或执行某些操作的权限进行限制，这一限制不受单个实例的影响，而是依据用户角色来确定。可以为以下实体操作指定操作类型：创建、通过关联创建、更新、删除、静态操作、实例操作。
+必须在 RAP 处理程序方法中实现全局授权功能FOR GLOBAL AUTHORIZATION。
+> 
+> instance : 基于实体实例状态的授权检查。
+可以针对以下实体操作进行指定：通过关联创建、更新、删除、实例操作。
+必须在 RAP 处理程序方法中实现实例授权功能FOR INSTANCE AUTHORIZATION。
+> 
+> global,instance : 全局授权控制和实例授权控制可以结合起来。在这种情况下，基于实例的操作会在全局授权检查和实例授权检查中进行验证。必须实现 RAP 处理程序方法 FOR GLOBAL AUTHORIZATION 和 FOR INSTANCE AUTHORIZATION。这些检查会在运行时的不同时间点执行。
+>
+> none: 在依赖授权的实体中执行的操作会被隐式地标记为“授权：无”。如果未指定“无”，则无法为授权实现 RAP 处理程序方法。
+
+#### authorization : global （全局授权）
+
+Behavior
+```
+define behavior for YCX_TEST001_DATA //alias <alias_name>
+persistent table ycxcreatedata
+draft table ycxcreatedata_d
+lock master
+total etag ChangedBy
+authorization master ( global,instance )  //对整体和实例有权限设置
+etag master ChangedBy
+```
+
+```
+{
+    create (authorization : global); //只有create有权限上的设置
+}
+```
+
+Classes
+> 下面禁止用户更新和edit按钮
+```
+  METHOD get_global_authorizations.
+    if requested_authorizations-%update = if_abap_behv=>mk-on
+    or
+    requested_authorizations-%action-edit = if_abap_behv=>mk-on.
+
+
+*    result-%update = if_abap_behv=>auth-allowed.
+*    result-%action-edit = if_abap_behv=>auth-allowed.
+
+    result-%update = if_abap_behv=>auth-unauthorized.
+    result-%action-edit = if_abap_behv=>auth-unauthorized.
+
+    ENDIF.
+
+
+  ENDMETHOD.
+```
+![alt text](../PNG/authorization.png)
+
+#### authorization : instance
+Behavior
+```
+authorization master ( global,instance ) 
+```
+
+classes
+> 对一些功能设定权限 以下代码功能为一个用户只能改动或者删除自己创建的数据
+```
+METHOD get_instance_authorizations.
+
+  READ ENTITIES OF ycx_test001_data IN LOCAL MODE
+    ENTITY ycx_test001_data
+      ALL FIELDS WITH CORRESPONDING #( keys )
+      RESULT DATA(peoples)
+      FAILED failed.
+
+  result = VALUE #( FOR people IN peoples
+                    ( %key = people-%key
+                      %delete = COND #( WHEN cl_abap_context_info=>get_user_technical_name( ) = people-UserName
+                                                              THEN if_abap_behv=>fc-o-enabled
+                                                              ELSE if_abap_behv=>fc-o-disabled
+                                                              )
+                      %update = COND #( WHEN cl_abap_context_info=>get_user_technical_name(  ) = people-UserName
+                                                              THEN if_abap_behv=>mk-on
+                                                              ELSE if_abap_behv=>mk-off
+                                                              )
+                      %action-edit = COND #( WHEN cl_abap_context_info=>get_user_technical_name(  ) = people-UserName
+                                                              THEN if_abap_behv=>auth-allowed
+                                                              ELSE if_abap_behv=>auth-unauthorized )
+                                                              ) ).
+
+ENDMETHOD.
+```
+![alt text](../PNG/authorization_instance1.png)
+![alt text](../PNG/authorization_instance2.png)
+
+
+## features
+
+#### features : instance
+> 业务对象的操作可以根据特定实例的条件启用或禁用，例如特定字段的值或引用数据的值。例如，如果业务对象实例的状态设置为已归档，则可以通过实例特征控制禁用所有修改操作。在 RAP 处理器方法“FOR INSTANCE FEATURES”中实现是强制性的。
+
+classes
+> 检查选中数据 Name 字段值为 陈旭 按钮不被激活反之为按钮为激活状态
+> %action-checkName = COND #( WHEN <people>-Name = '陈旭'
+                                                          THEN if_abap_behv=>fc-o-disabled
+                                                          ELSE if_abap_behv=>fc-o-enabled )
+```
+METHOD get_instance_features.
+  READ ENTITIES OF ycx_test001_data IN LOCAL MODE
+    ENTITY ycx_test001_data
+      ALL FIELDS WITH CORRESPONDING #( keys )
+      RESULT DATA(peoples)
+      FAILED failed.
+
+  LOOP AT peoples ASSIGNING FIELD-SYMBOL(<people>).
+    APPEND VALUE #( %tky = <people>-%tky
+                    %action-checkName = COND #( WHEN <people>-Name = '陈旭'
+                                                          THEN if_abap_behv=>fc-o-disabled
+                                                          ELSE if_abap_behv=>fc-o-enabled )
+                    %field-TimesChildCreated = if_abap_behv=>fc-f-read_only
+                                                            ) TO result.
+  ENDLOOP.
+
+*    result = VALUE #( FOR people IN peoples
+*                      ( %key = people-%key
+*                        %features-%action-checkName = COND #( WHEN people-Name = '陈旭'
+*                                                              THEN if_abap_behv=>fc-o-disabled
+*                                                              ELSE if_abap_behv=>fc-o-enabled )
+*                                                              ) ).
+ENDMETHOD.
+```
+
+![alt text](../PNG/features_instance.png)
+
+#### features : global
+> 业务对象的操作可以全局启用或禁用。这意味着，该决定与单个实体实例的状态无关。例如，可以通过解释功能切换状态来全局启用或禁用某个操作。在 RAP 处理器方法“FOR GLOBAL FEATURES”中实现是强制性的。
+>
+> 注意使用features : global 这意味着我们无法读取选中信息，也就没有key这个参数，我们只能获取全局数据
+> 
+
+behavior
+```
+delete ( features : global );
+```
+
+classes
+> 当用户为 CHENXU 禁用删除按钮
+```
+  METHOD get_global_features.
+      if requested_features-%delete = if_abap_behv=>mk-on.
+      Data(lv_result) = COND #( when cl_abap_context_info=>get_user_alias(  ) = 'CHENXU'
+                               then if_abap_behv=>mk-on
+                               else if_abap_behv=>mk-off
+                                ).
+
+      result-%delete = lv_result.
+
+      ENDIF.
+
+  ENDMETHOD.
+```
+## 执行顺序
+> 运行顺序从左到右
+> get_global_authorizations  get_global_features  get_instance_authorizations  get_instance_features
+
+## precheck
+
 
 
 ## field
@@ -41,6 +217,8 @@ field (mandatory) BValue;
 ![alt text](../PNG/mandatory.png)
 
 ## field(features:instance)
+> 加入 %field-TimesChildCreated = if_abap_behv=>fc-f-read_only 字段之后生成的输入框就变成只读状态
+> 
 Behavior
 ```
 field ( features : instance ) AValue;
@@ -59,16 +237,39 @@ ENDCLASS.
 CLASS lhc_YCX_R_MAINSHOW IMPLEMENTATION.
 
   METHOD get_instance_features.
-    //内部可写后续逻辑
+    READ ENTITIES OF ycx_test001_data IN LOCAL MODE
+      ENTITY ycx_test001_data
+        ALL FIELDS WITH CORRESPONDING #( keys )
+        RESULT DATA(peoples)
+        FAILED failed.
+
+    LOOP AT peoples ASSIGNING FIELD-SYMBOL(<people>).
+      APPEND VALUE #( %tky = <people>-%tky
+                      %action-checkName = COND #( WHEN <people>-Name = '陈旭'
+                                                            THEN if_abap_behv=>fc-o-disabled
+                                                            ELSE if_abap_behv=>fc-o-enabled )
+                      %field-TimesChildCreated = if_abap_behv=>fc-f-read_only     //只读
+                                                             ) TO result.
+    ENDLOOP.
+
+*    result = VALUE #( FOR people IN peoples
+*                      ( %key = people-%key
+*                        %features-%action-checkName = COND #( WHEN people-Name = '陈旭'
+*                                                              THEN if_abap_behv=>fc-o-disabled
+*                                                              ELSE if_abap_behv=>fc-o-enabled )
+*                                                              ) ).
   ENDMETHOD.
 
 ENDCLASS.
 ```
+![alt text](../PNG/TimesChildCreated.png)
+
 
 
 ## field(mandatory:create)
 > 点击Create按钮后会生成弹窗,用@EndUserText.label : 'BValue'设置label
-> 
+>
+> BValue字段要在表中设置 not null
 Behavior
 ```
 field (mandatory : create) BValue;
@@ -237,8 +438,47 @@ ENDMETHOD.
 
 ## validation 
 
+behavior
+> 在创建，更新时检查输入框（OperandA）
+```
+validation Validation_Numeric on save {
+    create;
+    update;
+    field OperandA;
+}
+```
 
+classes
+> 检查输入框（OperandA）是否为空，为空弹出警告
+```
+METHOD Validation_Numeric.
+READ ENTITIES OF YCX_R_TEST_001 IN LOCAL MODE
+  ENTITY YCX_R_TEST_001
+    FIELDS ( OperandA  )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(calculators).
 
+  LOOP AT calculators INTO DATA(calculator) .
+      IF calculator-OperandA IS INITIAL.
+          APPEND VALUE #( %tky = calculator-%tky ) TO failed-ycx_r_test_001.
+          APPEND VALUE #(
+            %tky = calculator-%tky
+              %msg = new_message(
+                        id       = 'YCX_MES_TEST01'           " 系统消息类
+                        number   = 005          " 通用消息编号
+                        severity = if_abap_behv_message=>severity-error
+                        v1       = '输入框 (v1)' " 作为变量传递
+                        v2       = 'OperandA (v2)'
+                        v3       = '不能为空 (v3)'
+                      )
+            %element-OperandA = if_abap_behv=>mk-on
+            %state_area       =  'test1'
+          ) TO reported-ycx_r_test_001.
+
+      ENDIF.
+  ENDLOOP.
+ENDMETHOD.
+```
 
 
 ## determination
