@@ -64,6 +64,8 @@ FAILED DATA(failed).
 > FAILED - 如果读取不起作用，则错误条目的键。
 > 
 > REPORTED - 在读取出现问题时包含错误消息。
+>
+> MAPPED - 返回更改的键和从 CID 到表键的映射。
 
 #### **CREATE**
 > 这里简单创建一条数据，有两个字段PartnerName和Country
