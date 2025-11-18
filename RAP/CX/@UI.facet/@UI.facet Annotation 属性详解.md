@@ -499,7 +499,7 @@ define view entity YCX_VH_VALUEHELP as select from ycxvaluehelp
   ]
   @UI.textArrangement: #TEXT_ONLY
   @Consumption.valueHelpDefault.display:false
-  @ObjectModel.text.element: ['Text'] // Search Term #DisplayTextAndID
+  @ObjectModel.text.element: ['Text'] // id字段变成显示Text字段内容
     key id as Id,
     
   @EndUserText.label : 'String Text'
