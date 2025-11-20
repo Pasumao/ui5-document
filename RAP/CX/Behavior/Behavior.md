@@ -1,5 +1,7 @@
 ## **目录**
 - [**目录**](#目录)
+- [unmanaged](#unmanaged)
+- [managed](#managed)
 - [draft table](#draft-table)
 - [with draft](#with-draft)
 - [implementation in class zbp\_cx\_r\_xxxx unique](#implementation-in-class-zbp_cx_r_xxxx-unique)
@@ -22,12 +24,19 @@
 - [action](#action)
     - [static action](#static-action)
     - [Factory Action](#factory-action)
+- [Internal Action](#internal-action)
 - [action and function](#action-and-function)
 - [side effects](#side-effects)
 - [validation](#validation)
 - [determination](#determination)
 - [default function GetDefaultsFor](#default-function-getdefaultsfor)
 - [例](#例)
+
+## unmanaged
+> 当使用非管理实现类型时，开发者必须实现所有行为。这涉及为所有必要作编写代码，包括创建、更新和删除、判定和验证
+
+## managed
+> 相反，在受管理的实现类型中，框架负责标准作，如创建、更新和删除，而应用开发者只需创建非标准行为组件，如判定和验证等
 
 ## draft table
 >  RAP ABAP 中的草稿表允许您在事务处理期间临时保存不完整或中间的用户输入。此草稿数据与最终的持久业务数据分开存储，确保用户可以逐步处理其更改，而无需立即将其提交到数据库中。用户可以稍后检索、修改和完成草稿。
@@ -736,6 +745,62 @@ ENDMETHOD.
 ![alt text](<../GIF/Factory Action.gif>)
 [回到顶部](#)
 
+## Internal Action
+> 普通 Action：可以通过 OData 服务暴露给外部调用
+> 
+> Internal Action：只能在 RAP 业务对象内部使用，不暴露给外部
+>
+behavior
+```
+  determination CalculatePoint on modify { field BonusPoints; }
+  side effects
+  {
+    field BonusPoints affects field TotalPoints;
+  }
+  internal action ReCalcTotalTotalPoints;
+```
+classes
+```
+METHOD CalculatePoint.
+  MODIFY ENTITIES OF ycx_test001_data IN LOCAL MODE
+    ENTITY ycx_test001_data
+      EXECUTE ReCalcTotalTotalPoints
+      FROM CORRESPONDING #( keys ).
+ENDMETHOD.
+
+METHOD ReCalcTotalTotalPoints.
+  READ ENTITIES OF ycx_test001_data IN LOCAL MODE
+  ENTITY ycx_test001_data
+  FIELDS ( BonusPoints )
+  WITH CORRESPONDING #( keys )
+  RESULT DATA(lt_bouspoints).
+
+  LOOP AT lt_bouspoints ASSIGNING FIELD-SYMBOL(<fs_bouspoint>).
+    <fs_bouspoint>-TotalPoints = <fs_bouspoint>-BonusPoints.
+
+    READ ENTITIES OF ycx_test001_data IN LOCAL MODE
+      ENTITY ycx_test001_data
+      BY \_project
+      FIELDS ( Point )
+      WITH VALUE #( ( %tky = <fs_bouspoint>-%tky ) )
+      RESULT DATA(lt_points).
+
+    LOOP AT lt_points ASSIGNING FIELD-SYMBOL(<fs_point>).
+      <fs_bouspoint>-TotalPoints = <fs_bouspoint>-TotalPoints + <fs_point>-Point.
+    ENDLOOP.
+  ENDLOOP.
+
+
+  MODIFY ENTITIES OF ycx_test001_data IN LOCAL MODE
+    ENTITY ycx_test001_data
+      UPDATE FIELDS ( TotalPoints )
+      WITH VALUE #( FOR bouspoint IN lt_bouspoints  (
+                          %tky      = bouspoint-%tky
+                          TotalPoints  = bouspoint-TotalPoints ) ).
+ENDMETHOD.
+```
+[回到顶部](#)
+
 ## action and function
 > 如果需要改变业务对象的状态或持久化数据，使用action；如果只是查询或计算，使用function。
 > 
@@ -750,7 +815,8 @@ ENDMETHOD.
 [回到顶部](#)
 
 ## validation 
-
+> 验证适用用于保存事件，多个cud操作（创建/更新/删除）以及特定字段的更改。
+> 
 behavior
 > 在创建，更新时检查输入框（OperandA）
 ```
