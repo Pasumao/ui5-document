@@ -64,11 +64,9 @@
 > 
 > [#CHART_REFERENCE](#typechart_reference) - 图表
 > 
-> \#TABLE - 表格
-> 
 > [#LINEITEM_REFERENCE](#typelineitem_reference) - 行项目
 > 
-> \#IDENTIFICATION - 标识区域
+> /#IDENTIFICATION_REFERENCE - 标识区域
 > 
 > [#DATAPOINT_REFERENCE](#datapoint_reference) - 数据点
 > 
@@ -190,6 +188,7 @@ e-5. 带重要性的facet
 ![alt text](<PNG/屏幕截图 2025-09-24 130046.png>)
 
 #### type:#LINEITEM_REFERENCE
+###### 例1
 > 要在标准facet显示表要用到 type:#LINEITEM_REFERENCE 还需要在需要显示的列的关键字上加入@UI.lineitem 由于在 @UI.facet中有 
 > targetQualifier: 'table' 所以还需在@UI.lineitem中加入qualifier: table 来控制其需要展示的列
 ```
@@ -216,6 +215,129 @@ e-5. 带重要性的facet
    AreachartDevLowerboundValue;
 ```
 ![alt text](<PNG/屏幕截图 2025-09-24 133359.png>)
+
+###### 例2
+> 显示子关联表数据
+>
+> 要使用 type:#LINEITEM_REFERENCE ，  targetQualifier: 'Project', targetElement: '_PROJECT'
+>
+> 子表中@UI.lineItem 要设置 qualifier: 'Project'
+> 
+cds
+```
+@UI.facet: [
+      {
+        purpose: #STANDARD,
+        type:#LINEITEM_REFERENCE,
+        targetQualifier: 'Project',
+        targetElement: '_PROJECT',
+        label:'Project Table',
+        position: 20
+               
+      }
+  ]
+```
+
+子cds 
+```
+@Metadata.layer: #CORE
+annotate entity YCX_TEST001_C_PROJECT with
+{
+  @UI.facet:[
+   {
+       purpose : #STANDARD,
+       type    : #IDENTIFICATION_REFERENCE
+   }]
+
+  @UI.lineItem: [
+          {
+              label: 'Id',
+              position: 10,
+              qualifier: 'Project'
+          }
+      ]
+  @UI.identification: [{ position: 10 ,label: 'Id' }]
+  Id;
+
+  @UI.lineItem: [
+      {
+          label: 'ProjectId',
+          position: 20,
+          qualifier: 'Project'
+      }
+  ]
+  @UI.identification: [{ position: 20 ,label: 'ProjectId' }]
+  ProjectId;
+
+  @UI.lineItem: [
+      {
+          label: 'ProjectName',
+          position: 30,
+          qualifier: 'Project'
+      }
+  ]
+  @UI.identification: [{ position: 30 ,label: 'ProjectName' }]
+  ProjectName;
+
+  @UI.lineItem: [
+      {
+          label: 'ParentId',
+          position: 40,
+          qualifier: 'Project'
+      }
+  ]
+  @UI.identification: [{ position: 40 ,label: 'ParentId' }]
+  ParentId;
+
+  @UI.lineItem: [
+      {
+          label: 'Point',
+          position: 50,
+          qualifier: 'Project'
+      }
+  ]
+  @UI.identification: [{ position: 50 ,label: 'Point' }]
+  Point;
+  /* Associations */
+  //_DATA;
+
+}
+```
+
+![alt text](PNG/LINEITEM_REFERENCE2.png)
+
+
+#### type:#IDENTIFICATION_REFERENCE
+> 要在标准facet显示字段组需要在@UI.facet中的加入type:#IDENTIFICATION_REFERENCE 还需要在图表所以字段中设置@UI.identification由于在 
+> @UI.facet中有  targetQualifier: 'test' 所以还需在@UI.fieldGroup中加入qualifier: 'test' 来控制其需要展示的字段
+> 
+```
+@UI.facet: [
+   {
+      purpose: #STANDARD,
+      position: 10,
+      type: #COLLECTION,
+      label:'FIELD',
+      id: 'field' 
+   },
+   ...
+   { 
+      parentId: 'field' ,
+      type:#IDENTIFICATION_REFERENCE,
+      label:'Test',
+      position: 25,
+      targetQualifier: 'test'
+   },
+   ...
+]
+
+  @UI:{
+      identification: [{ position: 10,qualifier: 'test' }]
+  }
+  @EndUserText.label : 'TimesChildCreated'
+  TimesChildCreated;
+```
+![alt text](PNG/IDENTIFICATION_REFERENCE.png)
 
 #### type:#FIELDGROUP_REFERENCE
 > 要在标准facet显示字段组需要在@UI.facet中的加入type : #FIELDGROUP_REFERENCE 还需要在图表所以字段中设置@UI.fieldGroup由于在 
@@ -275,8 +397,10 @@ TargetValue;
 ![alt text](PNG/hidden.png)
 
 #### #PRESENTATIONVARIANT_REFERENCE
-> 在 @UI.facet中使用type: #PRESENTATIONVARIANT_REFERENCE时需要与targetQualifier: 'pVariant'配合使用，还需要在子表cds中使用
-> @UI.presentationVariant中设置qualifier: 'pVariant'配合使用才能显示出表
+> 在 @UI.facet中使用type: #PRESENTATIONVARIANT_REFERENCE时需要与targetQualifier: 'pVariant'配合使用,还要使用targetElement: '_Child', 还需要在子表cds中使用
+> @UI.presentationVariant中设置qualifier: 'pVariant'配合使用才能显示出表 
+>
+> 树状表也会用到 这边请看[示例](../树状表.md)
 ```
 @UI.facet:[
    {
@@ -499,7 +623,7 @@ define view entity YCX_VH_VALUEHELP as select from ycxvaluehelp
   ]
   @UI.textArrangement: #TEXT_ONLY
   @Consumption.valueHelpDefault.display:false
-  @ObjectModel.text.element: ['Text'] // Search Term #DisplayTextAndID
+  @ObjectModel.text.element: ['Text'] // id字段变成显示Text字段内容
     key id as Id,
     
   @EndUserText.label : 'String Text'

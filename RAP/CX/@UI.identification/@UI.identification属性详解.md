@@ -1,5 +1,5 @@
 ## **@UI.identification属性详解**
-@UI.identification 是 SAP BTP RAP 开发中用于定义对象页面标识区域(头部区域)字段显示属性和行为的注解。以下是各个属性的详细说明：
+@UI.identification 是 SAP BTP RAP 开发中用于定义对象页面标识区域(头部区域)字段显示属性和行为的注解。与Facet的关联：仅仅在字段上定义@UI.identification注解，字段还不会在界面上显示。必须通过 @UI.facet 在视图层面声明一个类型为 #IDENTIFICATION_REFERENCE 的界面区域，并将它和你创建的字段组绑定，这个组的字段才会在对象页上渲染出来。以下是各个属性的详细说明：
 
 #### a，基本显示属性
 

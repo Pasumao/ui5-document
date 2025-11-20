@@ -1,6 +1,11 @@
 ## **目录**
 - [**目录**](#目录)
+- [unmanaged](#unmanaged)
+- [managed](#managed)
 - [draft table](#draft-table)
+- [with draft](#with-draft)
+- [implementation in class zbp\_cx\_r\_xxxx unique](#implementation-in-class-zbp_cx_r_xxxx-unique)
+- [etag master LocalLastChangedAt;](#etag-master-locallastchangedat)
 - [authorization （授权）](#authorization-授权)
     - [authorization : global （全局授权）](#authorization--global-全局授权)
     - [authorization : instance](#authorization--instance)
@@ -10,21 +15,104 @@
 - [执行顺序](#执行顺序)
 - [precheck](#precheck)
 - [field](#field)
-- [field(mandatory)](#fieldmandatory)
-- [field(features:instance)](#fieldfeaturesinstance)
-- [field(mandatory:create)](#fieldmandatorycreate)
+    - [field(suppress)](#fieldsuppress)
+    - [field(mandatory)](#fieldmandatory)
+    - [field(features:instance)](#fieldfeaturesinstance)
+    - [field(mandatory:create)](#fieldmandatorycreate)
+- [function](#function)
+    - [default function GetDefaultsForChild;](#default-function-getdefaultsforchild)
 - [action](#action)
     - [static action](#static-action)
     - [Factory Action](#factory-action)
+- [Internal Action](#internal-action)
+- [action and function](#action-and-function)
 - [side effects](#side-effects)
 - [validation](#validation)
 - [determination](#determination)
 - [default function GetDefaultsFor](#default-function-getdefaultsfor)
 - [例](#例)
 
+## unmanaged
+> 当使用非管理实现类型时，开发者必须实现所有行为。这涉及为所有必要作编写代码，包括创建、更新和删除、判定和验证
+
+## managed
+> 相反，在受管理的实现类型中，框架负责标准作，如创建、更新和删除，而应用开发者只需创建非标准行为组件，如判定和验证等
 
 ## draft table
 >  RAP ABAP 中的草稿表允许您在事务处理期间临时保存不完整或中间的用户输入。此草稿数据与最终的持久业务数据分开存储，确保用户可以逐步处理其更改，而无需立即将其提交到数据库中。用户可以稍后检索、修改和完成草稿。
+
+## with draft
+>  用于启用 draft 功能
+>
+
+还需要用到以下
+
+|Draft Action	        |Meaning	|
+|---------------|-----------------------------------------|
+|draft action Edit;	|将持久化表（persistent table）中的内容复制到草稿表（draft table）。|
+|draft action Activate;	|将草图数据库表的内容复制到持久数据库表，并清除草稿数据库表|
+|draft action Discard;	|清除草稿数据库表中的所有条目	|
+|draft action Resume; 	    |在持久数据库表上为实体实例设置锁|
+|draft determine action Prepare;	    |最终确定操作允许消费者执行最终确定(determination)和验证(validation)。草稿确定操作是其对应的草稿版功能。|
+
+## implementation in class zbp_cx_r_xxxx unique
+> 此声明指明了可实现额外判定和验证的实现类。在非托管环境( unmanaged )中，该类会执行所有操作。
+> 
+> 可以写在managed ，也可写在 define behavior for YCX_R_MAINSHOW 下面
+> 
+```
+managed implementation in class zbp_cx_r_mainshow unique;
+strict ( 2 );
+with draft;
+
+define behavior for YCX_R_MAINSHOW //alias <alias_name>
+persistent table ycxmaintable
+draft table ycxmaintable_d
+lock master
+total etag Createdby
+authorization master ( instance )
+etag master Createdby
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( readonly ) Id;
+  field ( features : instance ) AValue;
+
+  association _Chart { with draft;create; }
+
+  draft action Resume;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft determine action Prepare{}
+
+  ...
+}
+
+define behavior for YCX_R_CHART //alias <alias_name>
+
+implementation in class zbp_cx_r_char unique
+
+persistent table ycxchart
+draft table ycxchart_d
+lock dependent by _Main
+authorization dependent by _Main
+etag master Id
+{
+  update;
+  delete;
+  field ( readonly ) Id;
+  field (readonly) ParentId;
+  association _Main{with draft;}
+  ...
+
+}
+```
+[回到顶部](#)
+
+## etag master LocalLastChangedAt;
+> 定义实体为 ETag 主实体，并指定负责变更日志记录的字段。依赖实体也可通过 _Assoc 关联成为 ETag 依赖实体。
 
 ## authorization （授权）
 > global :对整个 RAP BO 的数据访问权限或执行某些操作的权限进行限制，这一限制不受单个实例的影响，而是依据用户角色来确定。可以为以下实体操作指定操作类型：创建、通过关联创建、更新、删除、静态操作、实例操作。
@@ -37,6 +125,7 @@
 > global,instance : 全局授权控制和实例授权控制可以结合起来。在这种情况下，基于实例的操作会在全局授权检查和实例授权检查中进行验证。必须实现 RAP 处理程序方法 FOR GLOBAL AUTHORIZATION 和 FOR INSTANCE AUTHORIZATION。这些检查会在运行时的不同时间点执行。
 >
 > none: 在依赖授权的实体中执行的操作会被隐式地标记为“授权：无”。如果未指定“无”，则无法为授权实现 RAP 处理程序方法。
+[回到顶部](#)
 
 #### authorization : global （全局授权）
 
@@ -78,6 +167,7 @@ Classes
   ENDMETHOD.
 ```
 ![alt text](../PNG/authorization.png)
+[回到顶部](#)
 
 #### authorization : instance
 Behavior
@@ -115,6 +205,7 @@ ENDMETHOD.
 ```
 ![alt text](../PNG/authorization_instance1.png)
 ![alt text](../PNG/authorization_instance2.png)
+[回到顶部](#)
 
 
 ## features
@@ -154,6 +245,7 @@ ENDMETHOD.
 ```
 
 ![alt text](../PNG/features_instance.png)
+[回到顶部](#)
 
 #### features : global
 > 业务对象的操作可以全局启用或禁用。这意味着，该决定与单个实体实例的状态无关。例如，可以通过解释功能切换状态来全局启用或禁用某个操作。在 RAP 处理器方法“FOR GLOBAL FEATURES”中实现是强制性的。
@@ -182,13 +274,104 @@ classes
 
   ENDMETHOD.
 ```
+[回到顶部](#)
+
 ## 执行顺序
 > 运行顺序从左到右
 > get_global_authorizations  get_global_features  get_instance_authorizations  get_instance_features
 
-## precheck
+## precheck 
+> precheck （预校验） 预检查用于在数据到达事务缓冲区之前对其进行验证。这可确保及早捕获无效数据，防止在草稿表或事务缓冲区中进行不必要的存储。
+> 防止无效数据保存在草稿表或事务缓冲区中，尤其是在启用草稿的应用程序中
+> 
 
+behavior
+```
+  update ( precheck );
+```
 
+classes
+> 以下代码功能 在更新时预检查字段 Age 是否符合年龄要求
+```
+METHOD precheck_update.
+
+  LOOP AT entities ASSIGNING FIELD-SYMBOL(<lfs_entity>).
+
+    "检查用户是否更改了字段Age
+    CHECK <lfs_entity>-%control-Age = 01.
+
+    READ ENTITIES OF ycx_test001_data IN LOCAL MODE
+    ENTITY ycx_test001_data
+    FIELDS ( Age )
+    WITH VALUE #( ( %key = <lfs_entity>-%key  ) )
+    RESULT DATA(lt_peopleAge).
+
+    IF sy-subrc IS INITIAL.
+
+      IF lt_peopleAge IS INITIAL.
+        "Create 时
+        IF <lfs_entity>-Age >= 18 AND <lfs_entity>-Age <= 24.
+          APPEND VALUE #(  %tky =  <lfs_entity>-%tky
+                            %msg = new_message_with_text(
+                              severity = if_abap_behv_message=>severity-success
+                              text = '18岁到24为实习生'
+                            )  ) TO reported-ycx_test001_data.
+        ELSEIF <lfs_entity>-Age >= 25 AND <lfs_entity>-Age <= 35.
+          APPEND VALUE #(  %tky =  <lfs_entity>-%tky
+                            %msg = new_message_with_text(
+                              severity = if_abap_behv_message=>severity-success
+                              text = '25岁到35为正式员工'
+                            )  ) TO reported-ycx_test001_data.
+        ELSE.
+          APPEND VALUE #(  %tky =  <lfs_entity>-%tky ) TO failed-ycx_test001_data.
+          APPEND VALUE #(  %tky =  <lfs_entity>-%tky
+                            %msg = new_message_with_text(
+                              severity = if_abap_behv_message=>severity-error
+                              text = '年龄不合要求 要18到35岁'
+                            )  ) TO reported-ycx_test001_data.
+
+        ENDIF.
+
+      ELSE.
+        Save 时
+        READ TABLE lt_peopleAge ASSIGNING FIELD-SYMBOL(<lfs_db_age>) INDEX 1.
+        IF sy-subrc IS INITIAL.
+          <lfs_db_age>-Age = <lfs_entity>-Age.
+        ENDIF.
+
+        IF <lfs_db_age>-Age >= 18 AND <lfs_db_age>-Age <= 24.
+          APPEND VALUE #(  %tky =  <lfs_entity>-%tky
+                            %msg = new_message_with_text(
+                              severity = if_abap_behv_message=>severity-success
+                              text = '18岁到24为实习生'
+                            )  ) TO reported-ycx_test001_data.
+        ELSEIF <lfs_db_age>-Age >= 25 AND <lfs_db_age>-Age <= 35.
+          APPEND VALUE #(  %tky =  <lfs_entity>-%tky
+                            %msg = new_message_with_text(
+                              severity = if_abap_behv_message=>severity-success
+                              text = '25岁到35为正式员工'
+                            )  ) TO reported-ycx_test001_data.
+        ELSE.
+          APPEND VALUE #(  %tky =  <lfs_entity>-%tky ) TO failed-ycx_test001_data.
+          APPEND VALUE #(  %tky =  <lfs_entity>-%tky
+                            %msg = new_message_with_text(
+                              severity = if_abap_behv_message=>severity-error
+                              text = '年龄不合要求 要18到35岁'
+                            )  ) TO reported-ycx_test001_data.
+
+        ENDIF.
+
+      ENDIF.
+
+    ENDIF.
+
+  ENDLOOP.
+
+ENDMETHOD.
+```
+
+![alt text](../GIF/precheck.gif)
+[回到顶部](#)
 
 ## field
 
@@ -196,7 +379,7 @@ classes
 >
 > field(mandatory) Field1, Field2 - 必填字段
 >
-> field(suppress) Field1, Field2 
+> [field(suppress) Field1, Field2](#fieldsuppress) - 隐藏字段
 >
 > [field(features:instance) Field1, Field2](#fieldfeaturesinstance) - features:instance会限制访问字段
 >
@@ -206,17 +389,36 @@ classes
 >
 > field ( readonly, numbering: managed ) Field1 - numbering: managed 自动生成随机十六位uuid   
 
+[回到顶部](#)
 
+#### field(suppress)
+> 字段（抑制）可用于从 BDEF 衍生类型和所有 RAP API 中移除字段。除主键字段、外键字段以及当前 BDEF 使用的字段（如 ETag 字段）外，所有字段均可进行此操作。若要从 OData 暴露中移除被抑制的字段，则必须设置 CDS 注解 @Consumption.hidden:true。
+> 
+> 只有当引用特定 CUKY 字段的所有 CDS 金额字段也被抑制时，才能抑制数据类型为 CUKY 的货币键字段。
+> 
+> 静态字段属性。
+> 
+> 在 ABAP 行为池中无需实现。
+> 
+> 如果 RAP BO 消费者尝试修改被抑制的字段，则会显示错误消息，告知消费者不存在此名称的字段。
+> 
+behavior
+```
+  field ( suppress ) ChangedAt;
+```
+![alt text](../PNG/suppress.png)
+[回到顶部](#)
 
-## field(mandatory)
+#### field(mandatory)
 > 在对应字段上写fieldGroup会生成带有星号的必填字段
 Behavior
 ```
 field (mandatory) BValue;
 ```
 ![alt text](../PNG/mandatory.png)
+[回到顶部](#)
 
-## field(features:instance)
+#### field(features:instance)
 > 加入 %field-TimesChildCreated = if_abap_behv=>fc-f-read_only 字段之后生成的输入框就变成只读状态
 > 
 Behavior
@@ -263,10 +465,11 @@ CLASS lhc_YCX_R_MAINSHOW IMPLEMENTATION.
 ENDCLASS.
 ```
 ![alt text](../PNG/TimesChildCreated.png)
+[回到顶部](#)
 
 
 
-## field(mandatory:create)
+#### field(mandatory:create)
 > 点击Create按钮后会生成弹窗,用@EndUserText.label : 'BValue'设置label
 >
 > BValue字段要在表中设置 not null
@@ -275,24 +478,132 @@ Behavior
 field (mandatory : create) BValue;
 ```
 ![alt text](<../PNG/mandatory create.png>)
+[回到顶部](#)
 
+## function
+> RAP 函数是一种用户实现的操作，它返回信息且没有副作用。函数对业务对象执行计算或读取操作，而不发出锁或修改数据。需要在 ABAP 行为池中的 RAP 处理器方法 FOR READ ... FUNCTION 中提供实现。
+>
+> 注意：函数绝不能修改任何数据。在 ABAP 行为池的实现中，MODIFY ENTITIES 操作是无效的。如果 RAP BO 使用者尝试访问相关函数，在函数实现中使用 MODIFY ENTITIES 语句将导致运行时错误。
+>
+metadata
+```
+@UI:{
+    lineItem: [
+      { 
+          position: 40,
+          label: 'City' 
+      },
+      {
+        type: #FOR_ACTION,
+        label:'checkCity',
+        dataAction: 'checkCity'
+      }
+    ],
+    fieldGroup: [{ position: 40 }]
+}
+@EndUserText.label : 'City'
+City;
+```
 
+behavior
+```
+  function (authorization : instance) checkCity result [0..*] $self;
+```
+
+classes
+```
+  METHOD checkCity.
+*      READ ENTITIES OF ycx_test001_data IN LOCAL MODE
+*      ENTITY ycx_test001_data
+*      ALL FIELDS WITH CORRESPONDING #( keys )
+*      RESULT DATA(lt_people).
+    APPEND VALUE #(  %msg = new_message_with_text(
+                        severity = if_abap_behv_message=>severity-information
+                        text = 'function checkCity'
+                      )  ) TO reported-ycx_test001_data.
+
+  ENDMETHOD.
+```
+
+![alt text](../PNG/function-checkCity.png)
+[回到顶部](#)
+
+#### default function GetDefaultsForChild;
+
+behavior
+```
+define behavior for YCX_R_GROUP //alias <alias_name>
+...
+{
+  ...
+  association _Members { create{default function GetDefaultsForChild;} with draft; }
+  ...
+}
+
+define behavior for YCX_R_MEMBER //alias <alias_name>
+persistent table ycxmember
+draft table ycxmember_d
+lock dependent by _Group
+authorization dependent by _Group
+etag master CreDate
+{
+  update;
+  delete;
+
+  field ( readonly:update )GroupId;  //这边为了显示 GroupId输入框 使用了 readonly:update
+
+  field ( mandatory : create ) MemberId,MemberName;
+  field (readonly : update)ParentMenuId;
+  field(readonly : update)MenuSeq;
+
+  association _Group{with draft;}
+  association _Member
+  {
+    with draft;
+    link action linkParentMenu;
+    unlink action unlinkParentMenu;
+
+  }
+
+  association _ChildMember { with draft;}
+
+  ...
+
+}
+```
+
+classes
+> GroupId输入框显示值
+```
+METHOD GetDefaultsForChild.
+      result = VALUE #( FOR key IN keys
+          ( %tky    = key-%tky
+            %param  = VALUE #( GroupId = key-GroupId
+                              ) ) ).
+
+ENDMETHOD.
+```
+![alt text](<../PNG/default function.png>)
+[回到顶部](#)
 
 ## action
 > 如果要一次创建操作多条数据，就得用上action，或者创建前的各种逻辑校验，如果需要返回值的时候也会需要action
 >
+> Action通常用于执行特定的业务操作（ 如审计，拒绝，计算等 ）。
+>
+> 在Fiori Elements中刷新:当Action执行后返回结果时, Fiori Elements会根据返回的数据自动刷新UI中对应的部分。引用[1]中提到,如果不返回结果(即不赋值给result-%param) ,即使数据库已经更新, U也不会刷新。
+> 
 Behavior
 ```
 action getTest1 parameter YCX_D_ActionParam_Test_0001 result [1] $self;
 ```
-
 
 YCX_D_ActionParam_Test_0001
 ```
 @EndUserText.label: 'YCX_D_ActionParam_Test_0001'
 define abstract entity YCX_D_ActionParam_Test_0001
 {
-    @UI.defaultValue: #( 'ELEMENT_OF_REFERENCED_ENTITY: AValue' )
+    @UI.defaultValue: #( 'ELEMENT_OF_REFERENCED_ENTITY: AValue' )    //@UI.defaultValue添加默认值
     a_value: abap.char( 256 );
     @UI.defaultValue: #( 'ELEMENT_OF_REFERENCED_ENTITY: BValue' )
     b_value: abap.char( 256 );
@@ -338,6 +649,7 @@ ENDMETHOD.
 ```
 
 ![alt text](../PNG/action.png)
+[回到顶部](#)
 
 #### static action
 
@@ -381,7 +693,7 @@ ENDMETHOD.
 ```
 
 ![alt text](<../PNG/static action.png>)
-
+[回到顶部](#)
 
 #### Factory Action
 > Factory Action没有返回值
@@ -431,13 +743,80 @@ METHOD copyData.
 ENDMETHOD.
 ```
 ![alt text](<../GIF/Factory Action.gif>)
+[回到顶部](#)
 
+## Internal Action
+> 普通 Action：可以通过 OData 服务暴露给外部调用
+> 
+> Internal Action：只能在 RAP 业务对象内部使用，不暴露给外部
+>
+behavior
+```
+  determination CalculatePoint on modify { field BonusPoints; }
+  side effects
+  {
+    field BonusPoints affects field TotalPoints;
+  }
+  internal action ReCalcTotalTotalPoints;
+```
+classes
+```
+METHOD CalculatePoint.
+  MODIFY ENTITIES OF ycx_test001_data IN LOCAL MODE
+    ENTITY ycx_test001_data
+      EXECUTE ReCalcTotalTotalPoints
+      FROM CORRESPONDING #( keys ).
+ENDMETHOD.
+
+METHOD ReCalcTotalTotalPoints.
+  READ ENTITIES OF ycx_test001_data IN LOCAL MODE
+  ENTITY ycx_test001_data
+  FIELDS ( BonusPoints )
+  WITH CORRESPONDING #( keys )
+  RESULT DATA(lt_bouspoints).
+
+  LOOP AT lt_bouspoints ASSIGNING FIELD-SYMBOL(<fs_bouspoint>).
+    <fs_bouspoint>-TotalPoints = <fs_bouspoint>-BonusPoints.
+
+    READ ENTITIES OF ycx_test001_data IN LOCAL MODE
+      ENTITY ycx_test001_data
+      BY \_project
+      FIELDS ( Point )
+      WITH VALUE #( ( %tky = <fs_bouspoint>-%tky ) )
+      RESULT DATA(lt_points).
+
+    LOOP AT lt_points ASSIGNING FIELD-SYMBOL(<fs_point>).
+      <fs_bouspoint>-TotalPoints = <fs_bouspoint>-TotalPoints + <fs_point>-Point.
+    ENDLOOP.
+  ENDLOOP.
+
+
+  MODIFY ENTITIES OF ycx_test001_data IN LOCAL MODE
+    ENTITY ycx_test001_data
+      UPDATE FIELDS ( TotalPoints )
+      WITH VALUE #( FOR bouspoint IN lt_bouspoints  (
+                          %tky      = bouspoint-%tky
+                          TotalPoints  = bouspoint-TotalPoints ) ).
+ENDMETHOD.
+```
+[回到顶部](#)
+
+## action and function
+> 如果需要改变业务对象的状态或持久化数据，使用action；如果只是查询或计算，使用function。
+> 
+> function = 只读 + 无副作用    function可重复使用
+> 
+> action = 可写 + 可以有副作用
+
+[回到顶部](#)
 
 ## side effects
 [side effects](<../side effects.md>)
+[回到顶部](#)
 
 ## validation 
-
+> 验证适用用于保存事件，多个cud操作（创建/更新/删除）以及特定字段的更改。
+> 
 behavior
 > 在创建，更新时检查输入框（OperandA）
 ```
@@ -479,11 +858,11 @@ READ ENTITIES OF YCX_R_TEST_001 IN LOCAL MODE
   ENDLOOP.
 ENDMETHOD.
 ```
-
+[回到顶部](#)
 
 ## determination
-[text](../determination.md)
-
+[determination](../determination.md)
+[回到顶部](#)
 
 ## default function GetDefaultsFor 
 >  默认值函数的名称需要以 GetDefaultsFor 开头
@@ -501,6 +880,7 @@ action PlainAction parameter myPlainParameter { default function GetDefaultsForP
 function DeepFunction deep parameter myDeepParameter result [0..*] MyEntity { default function GetDefaultsForDeepFct; }
 
 ```
+[回到顶部](#)
 
 ## 例
 ```

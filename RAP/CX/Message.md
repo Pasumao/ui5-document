@@ -90,7 +90,7 @@ ENTITY YCX_R_TEST_001
 
 LOOP AT calculators INTO DATA(calculator) .
     IF calculator-OperandA IS INITIAL.
-        APPEND VALUE #( %tky = calculator-%tky ) TO failed-ycx_r_test_001.  "如果没有这一行会以弹窗形式报错
+        APPEND VALUE #( %tky = calculator-%tky ) TO failed-ycx_r_test_001.  
         APPEND VALUE #(
             %tky = calculator-%tky
             %msg = new_message(
@@ -141,7 +141,7 @@ ENTITY ycx_test001_data
     RESULT DATA(peoples).
 
 LOOP AT peoples INTO DATA(people) .
-    APPEND VALUE #( %tky = people-%tky ) TO failed-ycx_test001_data.
+    APPEND VALUE #( %tky = people-%tky ) TO failed-ycx_test001_data.  "当发现错误failed-ycx_test001_data可以阻止数据存入表中
     IF people-Name <> '陈旭'.
         APPEND VALUE #( %tky = people-%tky
                         %msg = new_message_with_text(
