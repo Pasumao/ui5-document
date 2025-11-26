@@ -11,6 +11,11 @@
 > 业务对象封装了数据和业务逻辑（比如验证validation 、授权、决定determination）。为了与这些业务对象进行交互，你需要一种专门的语言——这就是EML。
 
 
+## 组件
+> %tky - 业务对象的建
+>
+> %param - 实际返回的数据行
+
 ## READ
 ```
 " 1. 读取当前数据
@@ -64,6 +69,8 @@ FAILED DATA(failed).
 > FAILED - 如果读取不起作用，则错误条目的键。
 > 
 > REPORTED - 在读取出现问题时包含错误消息。
+>
+> MAPPED - 返回更改的键和从 CID 到表键的映射。
 
 #### **CREATE**
 > 这里简单创建一条数据，有两个字段PartnerName和Country

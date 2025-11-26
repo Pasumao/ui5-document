@@ -10,7 +10,7 @@
 > 
 > %OP： 此组件指示消息与哪个已执行的操作相关。此组件仅对转移消息有效
 > 
-> %OTHER： 报告结构为每个已定义的实体包含一个表，并额外设有 %OTHER 组件用于容纳所有与实体无关的消息。当消息与业务对象实体无> 关时（未绑定消息），%OTHER 组件会填充消息包装类的一个实例
+> %OTHER： 报告结构为每个已定义的实体包含一个表，并额外设有 %OTHER 组件用于容纳所有与实体无关的消息。当消息与业务对象实体无关时（未绑定消息），%OTHER 组件会填充消息包装类的一个实例
 > 
 > %PATH（仅与子实体相关）： 路径组件将子实体映射到其父级。如果业务对象包含多个子实体，则会扩展 %PATH 组件以将该子实体映射到其父级及业务对象根级
 
@@ -90,7 +90,7 @@ ENTITY YCX_R_TEST_001
 
 LOOP AT calculators INTO DATA(calculator) .
     IF calculator-OperandA IS INITIAL.
-        APPEND VALUE #( %tky = calculator-%tky ) TO failed-ycx_r_test_001.  "如果没有这一行会以弹窗形式报错
+        APPEND VALUE #( %tky = calculator-%tky ) TO failed-ycx_r_test_001.  
         APPEND VALUE #(
             %tky = calculator-%tky
             %msg = new_message(
@@ -130,3 +130,25 @@ ENDMETHOD.
 ```
 
 ![alt text](PNG/Message例2.png)
+
+## 例3
+> 会以弹窗的形式报错
+```
+READ ENTITIES OF ycx_test001_data IN LOCAL MODE
+ENTITY ycx_test001_data
+    FIELDS ( Name  )
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(peoples).
+
+LOOP AT peoples INTO DATA(people) .
+    APPEND VALUE #( %tky = people-%tky ) TO failed-ycx_test001_data.  "当发现错误failed-ycx_test001_data可以阻止数据存入表中
+    IF people-Name <> '陈旭'.
+        APPEND VALUE #( %tky = people-%tky
+                        %msg = new_message_with_text(
+                        severity = if_abap_behv_message=>severity-error
+                        text = 'Name 值得为 陈旭' ) )
+                        TO reported-ycx_test001_data.
+
+    ENDIF.
+ENDLOOP.
+```

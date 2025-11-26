@@ -176,3 +176,72 @@ Criticality
 ```
 
 ![alt text](GIF/additionalBinding.gif)
+
+
+## 例
+![alt text](PNG/Consumption.valueHelpDefinition例1.png)
+
+YCX_TEST001_DATA
+```
+define root view entity YCX_TEST001_DATA as select from ycxcreatedata
+...
+association [0..1]       to YCX_TEST001_VH_CITY  as _VHCITY  on  $projection.City = _VHCITY.CityId
+{
+    ...
+    city as City,
+    ...
+    _VHCITY
+}
+```
+
+YCX_TEST001_C_DATA
+```
+define root view entity YCX_TEST001_C_DATA
+  provider contract transactional_query as projection on YCX_TEST001_DATA
+{
+    ...
+
+    @ObjectModel.foreignKey.association: '_VHCITY'
+    @Consumption.valueHelpDefinition: [{ entity: { name: 'YCX_TEST001_VH_CITY', element: 'CityId' } } ]
+    City,
+    ...
+    _VHCITY,
+    ...
+}
+
+```
+
+cds YCX_TEST001_VH_CITY
+> @UI.textArrangement 加入的显示效果请看[其他里的@UI.textArrangement](其他.md)部分
+>
+> 要想在valuehelp弹窗中点击数据之后 输入框 也只显示文本（ CityText ）字段内容 还需要在 所用输入框字段上 加入@UI.textArrangement 还要在valuehelp 的cds上用到 @ObjectModel.text.element: ['CityText'] 
+> 
+```
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'YCX_TEST001_VH_CITY'
+//@ObjectModel : { resultSet.sizeCategory: #XS }
+define root view entity YCX_TEST001_VH_CITY as select from ycxtest001vhcity
+{
+    @UI.textArrangement: #TEXT_ONLY
+    @ObjectModel.text.element: ['CityText'] 
+    @Consumption.valueHelpDefault.display:false
+    key city_id as CityId,
+    
+    city_text as CityText
+}
+```
+
+Service Definitions ( YCX_SD_TRAVEL )
+```
+@EndUserText.label: 'YCX_SD_TRAVEL'
+define service YCX_SD_TRAVEL {
+    ...
+  expose YCX_TEST001_C_DATA    as DATA;
+  expose YCX_TEST001_C_PROJECT as PROJECT;
+  expose YCX_TEST001_VH_CITY   as VHCITY;
+}
+```
+
+
+
+
