@@ -3,6 +3,7 @@
 ## 1.增加收信人域
 
 ```abap
+DATA(config_instance) = cl_bcs_mail_system_config=>create_instance( ).
 DATA recipient_domains TYPE cl_bcs_mail_system_config=>tyt_recipient_domains.
 recipient_domains = VALUE #(
     ( CONV cl_bcs_mail_system_config=>ty_recipient_domain( ls_email-email ) )
