@@ -49,17 +49,7 @@
 > 
 > iconUrl: 字段旁显示的图标URL(如'sap-icon://alert')
 > 
-> criticality: 关键性指示：
-> 
-> #CRITICAL/#ERROR - 错误/关键
-> 
-> #WARNING - 警告
-> 
-> #SUCCESS - 成功
-> 
-> #INFORMATION - 信息
-> 
-> #NONE - 无
+> criticality : 危急程度
 > 
 > criticalityRepresentation: 关键性表示方式：
 > 
