@@ -24,12 +24,11 @@
 - [action](#action)
     - [static action](#static-action)
     - [Factory Action](#factory-action)
-- [Internal Action](#internal-action)
+    - [Internal Action](#internal-action)
 - [action and function](#action-and-function)
 - [side effects](#side-effects)
 - [validation](#validation)
 - [determination](#determination)
-- [default function GetDefaultsFor](#default-function-getdefaultsfor)
 - [例](#例)
 
 ## unmanaged
@@ -109,7 +108,7 @@ etag master Id
 
 }
 ```
-[回到顶部](#)
+[回到顶部](#目录)
 
 ## etag master LocalLastChangedAt;
 > 定义实体为 ETag 主实体，并指定负责变更日志记录的字段。依赖实体也可通过 _Assoc 关联成为 ETag 依赖实体。
@@ -125,7 +124,7 @@ etag master Id
 > global,instance : 全局授权控制和实例授权控制可以结合起来。在这种情况下，基于实例的操作会在全局授权检查和实例授权检查中进行验证。必须实现 RAP 处理程序方法 FOR GLOBAL AUTHORIZATION 和 FOR INSTANCE AUTHORIZATION。这些检查会在运行时的不同时间点执行。
 >
 > none: 在依赖授权的实体中执行的操作会被隐式地标记为“授权：无”。如果未指定“无”，则无法为授权实现 RAP 处理程序方法。
-[回到顶部](#)
+[回到顶部](#目录)
 
 #### authorization : global （全局授权）
 
@@ -167,7 +166,7 @@ Classes
   ENDMETHOD.
 ```
 ![alt text](../PNG/authorization.png)
-[回到顶部](#)
+[回到顶部](#目录)
 
 #### authorization : instance
 Behavior
@@ -205,7 +204,7 @@ ENDMETHOD.
 ```
 ![alt text](../PNG/authorization_instance1.png)
 ![alt text](../PNG/authorization_instance2.png)
-[回到顶部](#)
+[回到顶部](#目录)
 
 
 ## features
@@ -245,7 +244,7 @@ ENDMETHOD.
 ```
 
 ![alt text](../PNG/features_instance.png)
-[回到顶部](#)
+[回到顶部](#目录)
 
 #### features : global
 > 业务对象的操作可以全局启用或禁用。这意味着，该决定与单个实体实例的状态无关。例如，可以通过解释功能切换状态来全局启用或禁用某个操作。在 RAP 处理器方法“FOR GLOBAL FEATURES”中实现是强制性的。
@@ -274,7 +273,7 @@ classes
 
   ENDMETHOD.
 ```
-[回到顶部](#)
+[回到顶部](#目录)
 
 ## 执行顺序
 > 运行顺序从左到右
@@ -371,7 +370,7 @@ ENDMETHOD.
 ```
 
 ![alt text](../GIF/precheck.gif)
-[回到顶部](#)
+[回到顶部](#目录)
 
 ## field
 
@@ -389,7 +388,7 @@ ENDMETHOD.
 >
 > field ( readonly, numbering: managed ) Field1 - numbering: managed 自动生成随机十六位uuid   
 
-[回到顶部](#)
+[回到顶部](#目录)
 
 #### field(suppress)
 > 字段（抑制）可用于从 BDEF 衍生类型和所有 RAP API 中移除字段。除主键字段、外键字段以及当前 BDEF 使用的字段（如 ETag 字段）外，所有字段均可进行此操作。若要从 OData 暴露中移除被抑制的字段，则必须设置 CDS 注解 @Consumption.hidden:true。
@@ -407,7 +406,7 @@ behavior
   field ( suppress ) ChangedAt;
 ```
 ![alt text](../PNG/suppress.png)
-[回到顶部](#)
+[回到顶部](#目录)
 
 #### field(mandatory)
 > 在对应字段上写fieldGroup会生成带有星号的必填字段
@@ -416,7 +415,7 @@ Behavior
 field (mandatory) BValue;
 ```
 ![alt text](../PNG/mandatory.png)
-[回到顶部](#)
+[回到顶部](#目录)
 
 #### field(features:instance)
 > 加入 %field-TimesChildCreated = if_abap_behv=>fc-f-read_only 字段之后生成的输入框就变成只读状态
@@ -465,7 +464,7 @@ CLASS lhc_YCX_R_MAINSHOW IMPLEMENTATION.
 ENDCLASS.
 ```
 ![alt text](../PNG/TimesChildCreated.png)
-[回到顶部](#)
+[回到顶部](#目录)
 
 
 
@@ -478,7 +477,7 @@ Behavior
 field (mandatory : create) BValue;
 ```
 ![alt text](<../PNG/mandatory create.png>)
-[回到顶部](#)
+[回到顶部](#目录)
 
 ## function
 > RAP 函数是一种用户实现的操作，它返回信息且没有副作用。函数对业务对象执行计算或读取操作，而不发出锁或修改数据。需要在 ABAP 行为池中的 RAP 处理器方法 FOR READ ... FUNCTION 中提供实现。
@@ -526,10 +525,24 @@ classes
 ```
 
 ![alt text](../PNG/function-checkCity.png)
-[回到顶部](#)
+[回到顶部](#目录)
 
 #### default function GetDefaultsForChild;
+>  默认值函数的名称需要以 GetDefaultsFor 开头
+```
+// Create operations (name can be omitted):
+create { default function; }
 
+// Create-by-association-operations:
+association _Item { with draft; create { default function GetDefaultsForCBA external 'GetDefaultsForCreateByAssociation'; } }
+
+//Actions:
+action PlainAction parameter myPlainParameter { default function GetDefaultsForPlainAct; }
+
+//Functions:
+function DeepFunction deep parameter myDeepParameter result [0..*] MyEntity { default function GetDefaultsForDeepFct; }
+
+```
 behavior
 ```
 define behavior for YCX_R_GROUP //alias <alias_name>
@@ -584,7 +597,7 @@ METHOD GetDefaultsForChild.
 ENDMETHOD.
 ```
 ![alt text](<../PNG/default function.png>)
-[回到顶部](#)
+[回到顶部](#目录)
 
 ## action
 > 如果要一次创建操作多条数据，就得用上action，或者创建前的各种逻辑校验，如果需要返回值的时候也会需要action
@@ -649,7 +662,7 @@ ENDMETHOD.
 ```
 
 ![alt text](../PNG/action.png)
-[回到顶部](#)
+[回到顶部](#目录)
 
 #### static action
 
@@ -693,7 +706,7 @@ ENDMETHOD.
 ```
 
 ![alt text](<../PNG/static action.png>)
-[回到顶部](#)
+[回到顶部](#目录)
 
 #### Factory Action
 > Factory Action没有返回值
@@ -743,13 +756,14 @@ METHOD copyData.
 ENDMETHOD.
 ```
 ![alt text](<../GIF/Factory Action.gif>)
-[回到顶部](#)
+[回到顶部](#目录)
 
-## Internal Action
+#### Internal Action
 > 普通 Action：可以通过 OData 服务暴露给外部调用
 > 
 > Internal Action：只能在 RAP 业务对象内部使用，不暴露给外部
 >
+
 behavior
 ```
   determination CalculatePoint on modify { field BonusPoints; }
@@ -799,7 +813,7 @@ METHOD ReCalcTotalTotalPoints.
                           TotalPoints  = bouspoint-TotalPoints ) ).
 ENDMETHOD.
 ```
-[回到顶部](#)
+[回到顶部](#目录)
 
 ## action and function
 > 如果需要改变业务对象的状态或持久化数据，使用action；如果只是查询或计算，使用function。
@@ -808,11 +822,11 @@ ENDMETHOD.
 > 
 > action = 可写 + 可以有副作用
 
-[回到顶部](#)
+[回到顶部](#目录)
 
 ## side effects
 [side effects](<../side effects.md>)
-[回到顶部](#)
+[回到顶部](#目录)
 
 ## validation 
 > 验证适用用于保存事件，多个cud操作（创建/更新/删除）以及特定字段的更改。
@@ -858,29 +872,11 @@ READ ENTITIES OF YCX_R_TEST_001 IN LOCAL MODE
   ENDLOOP.
 ENDMETHOD.
 ```
-[回到顶部](#)
+[回到顶部](#目录)
 
 ## determination
 [determination](../determination.md)
-[回到顶部](#)
-
-## default function GetDefaultsFor 
->  默认值函数的名称需要以 GetDefaultsFor 开头
-```
-// Create operations (name can be omitted):
-create { default function; }
-
-// Create-by-association-operations:
-association _Item { with draft; create { default function GetDefaultsForCBA external 'GetDefaultsForCreateByAssociation'; } }
-
-//Actions:
-action PlainAction parameter myPlainParameter { default function GetDefaultsForPlainAct; }
-
-//Functions:
-function DeepFunction deep parameter myDeepParameter result [0..*] MyEntity { default function GetDefaultsForDeepFct; }
-
-```
-[回到顶部](#)
+[回到顶部](#目录)
 
 ## 例
 ```
@@ -1003,4 +999,4 @@ etag master Id
 }
 ```
 
-[回到顶部](#)
+[回到顶部](#目录)

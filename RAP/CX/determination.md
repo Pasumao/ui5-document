@@ -65,7 +65,8 @@ determination DetName on save { field layover; delete; }
 ```
 
 #### Example(1):
-> 但点击create按钮时触发，获取技术名称给到字段上
+> 但点击create按钮时触发，获取技术名称给到字段 ( UserName ) 
+> 
 Behavior
 ```
   determination set_username on modify { create; }

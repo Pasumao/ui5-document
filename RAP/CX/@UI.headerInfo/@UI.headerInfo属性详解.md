@@ -54,9 +54,9 @@
 > 
 > iconUrl: 描述旁显示的图标URL
 > 
-> criticality: 关键性指示
+> criticality
 > 
-> criticalityRepresentation: 关键性表示方式
+> criticalityRepresentation
 > 
 > value: 描述的实际内容
 > 
@@ -80,8 +80,6 @@
      type: #STANDARD,
      label: 'Product Name',
      iconUrl: 'sap-icon://nutrition-activity',
-     criticality: #HIGH,
-     criticalityRepresentation: #WITHOUT_ICON,
      value: 'Ultra HD Television',
      valueQualifier: '',
      targetElement: '',
@@ -92,8 +90,6 @@
      type: #STANDARD,
      label: 'Description',
      iconUrl: 'sap-icon://detail-view',
-     criticality: #MEDIUM,
-     criticalityRepresentation: #WITH_ICON,
      value: '65-inch 4K Smart TV with HDR',
      valueQualifier: '',
      targetElement: '',

@@ -70,17 +70,7 @@
 > 
 > iconUrl: 列标题旁显示的图标URL(如'sap-icon://alert')
 > 
-> criticality: 关键性指示：
-> 
-> \#CRITICAL/#ERROR - 错误/关键
-> 
-> \#WARNING - 警告
-> 
-> \#SUCCESS - 成功
-> 
-> \#INFORMATION - 信息
-> 
-> \#NONE - 无
+> [criticality](#criticality)
 > 
 > criticalityRepresentation: 关键性表示方式：
 > 
@@ -151,7 +141,7 @@
    label: 'Customer',
    type: #WITH_URL,
    url: '/Customer/{CustomerID}',
-   criticality: #INFORMATION,
+   criticality: ,
    criticalityRepresentation: #WITH_ICON
 }, {
    position: 30,
@@ -291,6 +281,7 @@ ValueHelpId;
 
 
 ## inline
+> inline: true时 按钮会显示在table中
 ```
 @UI:{
    lineItem: [
@@ -311,3 +302,30 @@ Criticality;
 
 
 [回到顶部](#)
+
+
+## criticality
+> criticality 值为
+> 
+> 0 - Neutral
+> 
+> 1 - Negative (red)
+> 
+> 2 - Critical (orange)
+> 
+> 3 - Positive (green)
+> 
+> 5 - New Item (blue) ：用于突出显示在应用程序外部创建的新项目（例如，通过后端的 API 或作为副作用创建的项目），这些项目需要用户的关注。
+>
+> 按钮变更状态颜色也需要用到criticality
+> 
+metadata
+```
+...
+
+@UI.lineItem: [{ criticality: 'Criticality' }]
+annotate entity YCX_TEST001_C_DATA with
+{ ... }
+
+```
+![alt text](PNG/criticality.png)

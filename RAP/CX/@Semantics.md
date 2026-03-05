@@ -9,7 +9,7 @@
 > 
 > @Semantics.currencyCode - 用于货币代码字段
 > 
-> @Semantics.amount.currencyCode - 用于金额字段（带货币）
+> [@Semantics.amount.currencyCode](#semanticsamountcurrencycode) - 用于金额字段（带货币）
 > 
 > @Semantics.language - 用于语言字段
 > 
@@ -111,9 +111,40 @@ define view entity YCX_VH_VALUEHELP as select from ycxvaluehelp
 }
 ```
 
+## @Semantics.amount.currencyCode
+table ( ycxcreatedata )
+```
+define table ycxcreatedata {
+  ...
+  currency_code       : abap.cuky;
+  @Semantics.amount.currencyCode : 'ycxcreatedata.currency_code'
+  unit_price          : abap.curr(13,2);
+  @Semantics.amount.currencyCode : 'ycxcreatedata.currency_code'
+  total_value         : abap.curr(13,2);
+  ...
+}
+```
 
+cds ( YCX_TEST001_DATA )
+```
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'YCX_TEST001_DATA'
+define root view entity YCX_TEST001_DATA as select from ycxcreatedata
+  ...
+{
+    ...
 
+    currency_code as CurrencyCode,
+    @Semantics.amount.currencyCode : 'CurrencyCode'
+    total_value  as TotalValue,
+    @Semantics.amount.currencyCode : 'CurrencyCode'
+    unit_price as UnitPrice,
+        
+    ...
+}
 
+```
+![alt text](PNG/Semantics.amount.currencyCode.png)
 
 ## @Semantics.quantity.unitOfMeasure
 
